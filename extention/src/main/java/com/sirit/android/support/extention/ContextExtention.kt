@@ -19,6 +19,7 @@ import android.provider.Contacts
 import android.support.v4.content.ContextCompat.startActivity
 import java.util.ArrayList
 import android.support.v4.content.ContextCompat.startActivity
+import android.support.v4.content.ContextCompat.startActivity
 
 
 /**
@@ -147,9 +148,18 @@ fun Context.openSystemPhoneApp() {
     startActivity(intent)
 }
 
+//系统联系人界面
 fun Context.openSystemConstactActivity() {
     val intent = Intent()
     intent.action = Intent.ACTION_VIEW
     intent.data = Contacts.People.CONTENT_URI
+    startActivity(intent)
+}
+
+//系统短信界面
+fun Context.openSystemMsgActivity() {
+    val intent = Intent(Intent.ACTION_VIEW)
+    intent.type = "vnd.android-dir/mms-sms"
+//intent.setData(Uri.parse("content://mms-sms/conversations/"));//此为号码
     startActivity(intent)
 }
