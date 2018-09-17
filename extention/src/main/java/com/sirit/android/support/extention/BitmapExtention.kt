@@ -15,7 +15,7 @@ import java.io.IOException
  * @des  $des
  */
 
-fun Bitmap.saveToSdcard(filePath: String, needRecycle: Boolean = true, callBack: (File) -> Unit, context: () -> Context? = { null }) {
+fun Bitmap.saveToSdcard(filePath: String, needRecycle: Boolean = true, callBack: (File) -> Unit = {}, context: () -> Context? = { null }) {
     Thread {
         val file = File(filePath)
         var bos: BufferedOutputStream? = null
@@ -41,38 +41,8 @@ fun Bitmap.saveToSdcard(filePath: String, needRecycle: Boolean = true, callBack:
     }.start()
 }
 
-fun Bitmap.saveToSdcard(saveImgPath: String, maxSize: Int = 3000 * 3000, maxFileLength: Int = 200 * 1024, needRecycle: Boolean = true, callBack: (File) -> Unit, context: () -> Context? = { null }) {
+fun Bitmap.saveToSdcard(saveImgPath: String, maxFileLength: Int = 200 * 1024, needRecycle: Boolean = true, callBack: (File) -> Unit = {}, context: () -> Context? = { null }) {
     Thread {
-        var srcWidth = this.width
-        var srcHeight = this.height
-        var digree = 0
-
-        try {
-            val exif = ExifInterface(srcImagePath)
-            val ori = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED)
-            digree = when (ori) {
-                ExifInterface.ORIENTATION_ROTATE_90 -> 90
-                ExifInterface.ORIENTATION_ROTATE_180 -> 180
-                ExifInterface.ORIENTATION_ROTATE_270 -> 270
-                else -> 0
-            }
-        } catch (e: Exception) {
-
-        } finally {
-//            if (digree != 0) {
-//                val m = Matrix()
-//                m.postRotate(digree.toFloat())
-//                scaledBitmap = Bitmap.createBitmap(this, 0, 0, scaledBitmap.width, scaledBitmap.height, m, true)
-//            }
-        }
-        var sample = 1
-        while (srcWidth * srcHeight > maxSize) {
-            sample *= 2
-            srcWidth /= 2
-            srcHeight /= 2
-        }
-
-
         val file = File(saveImgPath)
         var bos: BufferedOutputStream? = null
         try {

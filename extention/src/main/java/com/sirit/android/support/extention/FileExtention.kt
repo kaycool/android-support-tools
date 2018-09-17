@@ -1,5 +1,6 @@
 package com.sirit.android.support.extention
 
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.ExifInterface
 import java.io.File
@@ -78,4 +79,49 @@ fun File.readPicDegree(): Int {
     }
 
     return degree
+}
+
+
+fun File.compress(MAXSIZE: Int = 3000 * 3000, outImagePath: String): String {
+
+    val options = BitmapFactory.Options()
+    options.inJustDecodeBounds = true
+
+    BitmapFactory.decodeFile(this.absolutePath, options)
+
+    var srcWidth = options.outWidth.toFloat()
+    var srcHeight = options.outHeight.toFloat()
+    val digree = this.readPicDegree()
+
+    var sample = 1
+    while (srcWidth * srcHeight > MAXSIZE) {
+        sample *= 2
+        srcWidth /= 2
+        srcHeight /= 2
+    }
+    options.inSampleSize = sample
+    options.inJustDecodeBounds = false
+
+    if (options.inSampleSize == 1) {
+        val ori = File(this.absolutePath)
+        val target = File(outImagePath)
+        try {
+            ori.copyTo(target)
+        } catch (e: Exception) {
+        }
+        return target.absolutePath
+    }
+
+    var scaledBitmap: Bitmap? = null
+    try {
+        scaledBitmap = BitmapFactory.decodeFile(this.absolutePath, options)
+    } catch (e: OutOfMemoryError) {
+        e.printStackTrace()
+    }
+    if (scaledBitmap == null) {
+        //todo 图片oom 问题导致的 上传不了
+        return this.absolutePath
+    }
+    scaledBitmap.rotateBitmap(digree).saveToSdcard(filePath = outImagePath)
+    return outImagePath
 }
