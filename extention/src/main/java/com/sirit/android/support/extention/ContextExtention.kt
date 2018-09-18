@@ -1,5 +1,6 @@
 package com.sirit.android.support.extention
 
+import android.app.Activity
 import android.content.Context
 import android.content.res.Configuration
 import android.graphics.drawable.Drawable
@@ -10,6 +11,7 @@ import android.support.v4.content.res.ResourcesCompat
 import android.util.Log
 import java.io.File
 import android.content.Intent
+import android.graphics.drawable.GradientDrawable
 import android.net.Uri
 import android.os.Environment
 import android.support.v4.content.ContextCompat.startActivity
@@ -20,6 +22,11 @@ import android.support.v4.content.ContextCompat.startActivity
 import java.util.ArrayList
 import android.support.v4.content.ContextCompat.startActivity
 import android.support.v4.content.ContextCompat.startActivity
+import android.support.v4.app.ActivityCompat.startActivityForResult
+import android.provider.MediaStore
+import android.support.v4.app.ActivityCompat.startActivityForResult
+
+
 
 
 /**
@@ -87,6 +94,36 @@ fun Context.svgDrawable(id: Int): Drawable? {
 
 fun Context.mipmapDrawable(id: Int): Drawable? = ResourcesCompat.getDrawable(resources, id, null)
 
+fun Context.createShapeDrawable(radiusPx: Float, solidColor: Int): Drawable = GradientDrawable().apply {
+    this.cornerRadius = radiusPx
+    this.setColor(solidColor)
+}
+
+fun Context.createShapeDrawable(radiiPx: FloatArray, solidColor: Int): Drawable = GradientDrawable().apply {
+    this.cornerRadii = radiiPx
+    this.setColor(solidColor)
+}
+
+fun Context.createShapeDrawable(colors: IntArray
+                                , radiiPx: FloatArray
+                                , orientation: GradientDrawable.Orientation): Drawable = GradientDrawable(orientation, colors).apply { this.cornerRadii = radiiPx }
+
+fun Context.createShapeDrawable(radiusPx: Float
+                                , strokeWidth: Int
+                                , strokeColor: Int): Drawable = GradientDrawable().apply {
+    this.cornerRadius = radiusPx
+    this.setStroke(strokeWidth, strokeColor)
+}
+
+fun Context.createShapeDrawable(radiusPx: Float
+                                , strokeWidth: Int
+                                , strokeColor: Int
+                                , solidColor: Int): Drawable = GradientDrawable().apply {
+    this.cornerRadius = radiusPx
+    this.setColor(solidColor)
+    this.setStroke(strokeWidth, strokeColor)
+}
+
 
 /**============================================系统属性==============================================**/
 fun Context.scanMediaSdcard(file: File) {
@@ -95,6 +132,26 @@ fun Context.scanMediaSdcard(file: File) {
     }
 }
 
+fun Context.openSystemCamera(requestCode: Int, outputFilePath: String? = null) {
+    val intent = Intent()
+    // 指定开启系统相机的Action
+    intent.action = MediaStore.ACTION_IMAGE_CAPTURE
+    val dir = File(outputFilePath)
+    if (!dir.exists()) {
+        dir.mkdirs()
+    }
+    val uri = Uri.fromFile(File(outputFilePath))
+    // 设置系统相机拍摄照片完成后图片文件的存放地址
+    intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
+    (this as? Activity?)?.startActivityForResult(intent, requestCode)
+}
+
+fun Context.openSystemGallery(requestCode: Int) {
+    val intent = Intent(Intent.ACTION_PICK, null)
+    intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
+    intent.action = Intent.ACTION_GET_CONTENT
+    (this as? Activity?)?.startActivityForResult(intent, requestCode)
+}
 
 fun Context.systemShareText(shareText: String, shareTitle: String = string(R.string.system_share_title_default)) {
     val shareIntent = Intent()

@@ -17,7 +17,7 @@ import java.util.*
  * @des  $des
  */
 abstract class ThirdLoginActivity : AppCompatActivity(), FacebookCallback<LoginResult> {
-    private val callbackManager by lazy { CallbackManager.Factory.create() }
+    protected val callbackManager by lazy { CallbackManager.Factory.create() }
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)

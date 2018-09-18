@@ -100,6 +100,13 @@ fun File.compress(MAXSIZE: Int = 3000 * 3000, outImagePath: String): String {
         srcHeight /= 2
     }
     options.inSampleSize = sample
+
+    //todo 根据bitmap占用的内存 查看当前可用内存是否可以加载该 bitmap
+//    BitmapFactory.decodeFile(this.absolutePath, options)
+//    val maxMemory = (Runtime.getRuntime().maxMemory() / 1024).toInt()
+//    val freeMemory = Runtime.getRuntime().freeMemory()
+
+
     options.inJustDecodeBounds = false
 
     if (options.inSampleSize == 1) {
@@ -109,8 +116,9 @@ fun File.compress(MAXSIZE: Int = 3000 * 3000, outImagePath: String): String {
             ori.copyTo(target)
         } catch (e: Exception) {
         }
-        return target.absolutePath
+        return outImagePath
     }
+
 
     var scaledBitmap: Bitmap? = null
     try {
