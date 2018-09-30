@@ -27,8 +27,6 @@ import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat.startActivityForResult
 
 
-
-
 /**
  * @author kai.w
  *         Context 上下文的扩展类，持续完善
