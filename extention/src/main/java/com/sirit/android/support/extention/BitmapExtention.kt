@@ -2,7 +2,6 @@ package com.sirit.android.support.extention
 
 import android.content.Context
 import android.graphics.*
-import android.media.ExifInterface
 import android.os.Handler
 import android.os.Looper
 import java.io.BufferedOutputStream

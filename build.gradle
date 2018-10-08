@@ -14,7 +14,7 @@ buildscript {
         // in the individual module build.gradle files
     }
 
-    ext.versions =[
+    ext.versions = [
             versionCode      : 1,
             versionName      : "1.0.0",
             minSdkVersion    : 19,
@@ -39,4 +39,11 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+buildscript {
+    ext.kotlin_version = '1.2.71'
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
 }

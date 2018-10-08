@@ -13,6 +13,7 @@ import java.io.File
 import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import android.net.Uri
+import android.os.Build
 import android.os.Environment
 import android.support.v4.content.ContextCompat.startActivity
 import android.support.v4.content.ContextCompat.startActivity
@@ -25,6 +26,7 @@ import android.support.v4.content.ContextCompat.startActivity
 import android.support.v4.app.ActivityCompat.startActivityForResult
 import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat.startActivityForResult
+import android.support.v4.content.FileProvider
 
 
 /**
@@ -138,7 +140,12 @@ fun Context.openSystemCamera(requestCode: Int, outputFilePath: String? = null) {
     if (!dir.exists()) {
         dir.mkdirs()
     }
-    val uri = Uri.fromFile(File(outputFilePath))
+    val uri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+        FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".fileProvider", File(outputFilePath))
+    } else {
+        Uri.fromFile(File(outputFilePath))
+    }
     // 设置系统相机拍摄照片完成后图片文件的存放地址
     intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
     (this as? Activity?)?.startActivityForResult(intent, requestCode)
