@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.widget.Button
 import com.sirit.android.support.extention.openSystemCamera
+import com.sirit.android.support.lib.compat.StatusBarCompat
 import java.util.*
 
 class MediaActivity : AppCompatActivity() {
@@ -14,6 +15,7 @@ class MediaActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_media)
+        StatusBarCompat.compat(this)
 
         mPicture.setOnClickListener {
             MediaHelp.Builder(this).startGallery()

@@ -6,11 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.database.Cursor
 import android.provider.MediaStore
-import android.util.Log
-import com.sirit.android.support.extention.openSystemCamera
 import java.io.File
-import java.util.ArrayList
-import java.util.LinkedHashMap
+import java.util.*
 
 /**
  * @author kai.w
@@ -76,22 +73,18 @@ object MediaHelp {
     }
 
 
-
     fun startImages(showGif: Boolean, resolver: ContentResolver) {
         clear()
         imageThread(showGif, resolver).start()
-        Log.d("PickPhotoView", "PickPhotoHelper image start")
     }
 
     fun startVideo(resolver: ContentResolver) {
         clear()
         videoThread(resolver).start()
-        Log.d("PickPhotoView", "PickPhotoHelper video start")
     }
 
     fun stop() {
         clear()
-        Log.d("PickPhotoView", "PickPhotoHelper stop")
     }
 
 

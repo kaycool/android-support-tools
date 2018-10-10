@@ -13,7 +13,6 @@ data class MediaModel(var maxSelectedMediaCount: Int = 1, var allMediaCount: Int
                       , var isShowGif: Boolean = true, var isShowVideo: Boolean = false) : Serializable
 
 
-
 data class VideoBean(val videoPath: String
                      , var videoDuration: Double
                      , val videoTitle: String
@@ -23,7 +22,7 @@ data class VideoBean(val videoPath: String
                      , val videoHeight: Int) : Serializable
 
 
-data class PhotoBean(val path: String, var select: Boolean = false, val dir: String): Serializable
+data class PhotoBean(val path: String, var select: Boolean = false, val dir: String) : Serializable
 
 class DirWithMedia : Serializable {
 

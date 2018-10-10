@@ -6,7 +6,7 @@ apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion versions.compileSdkVersion
     defaultConfig {
-        applicationId "com.sirit.android.support"
+        applicationId "com.sirit.android.support.media"
         minSdkVersion versions.minSdkVersion
         targetSdkVersion versions.targetSdkVersion
         versionCode versions.versionCode
