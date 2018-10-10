@@ -1,6 +1,7 @@
 package com.sirit.android.support.widget
 
 import android.content.Context
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.util.AttributeSet
 
@@ -14,6 +15,11 @@ class TitleToolBar : Toolbar {
     constructor(context: Context?, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
 
+    }
+
+
+    fun bindActivity(activity: AppCompatActivity) {
+        activity.setSupportActionBar(this)
     }
 
 

@@ -1,5 +1,6 @@
 package com.sirit.android.support.media
 
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
@@ -16,6 +17,11 @@ class MediaActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_media)
         StatusBarCompat.compat(this)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE
+            ,android.Manifest.permission.WRITE_EXTERNAL_STORAGE),0x1111)
+        }
 
         mPicture.setOnClickListener {
             MediaHelp.Builder(this).startGallery()
