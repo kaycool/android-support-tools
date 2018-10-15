@@ -34,7 +34,6 @@ class GalleryActivity : AppCompatActivity() {
         setContentView(R.layout.activity_gallery)
         StatusBarCompat.compat(this)
 
-
         mRvGallery.apply {
             mediaModel?.let {
                 this.layoutManager = GridLayoutManager(this@GalleryActivity, it.spanCount)
