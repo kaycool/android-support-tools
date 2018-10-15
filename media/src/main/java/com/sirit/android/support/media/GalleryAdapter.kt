@@ -12,7 +12,7 @@ import android.view.ViewGroup
  * @author kai.w
  * @des  $des
  */
-class GalleryAdapter(val ctx: Context, val mediaBeans: MutableList<MediaBean> = mutableListOf()) : RecyclerView.Adapter<GalleryAdapter.Companion.GalleryViewHolder>() {
+class GalleryAdapter(private val ctx: Context, private val mediaBeans: MutableList<MediaBean> = mutableListOf()) : RecyclerView.Adapter<GalleryAdapter.Companion.GalleryViewHolder>() {
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): GalleryViewHolder {
         val view = LayoutInflater.from(ctx).inflate(R.layout.item_gallery, p0, false)

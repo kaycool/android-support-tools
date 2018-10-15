@@ -20,11 +20,11 @@ class MediaActivity : AppCompatActivity() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE
-            ,android.Manifest.permission.WRITE_EXTERNAL_STORAGE),0x1111)
+                , android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 0x1111)
         }
 
         mPicture.setOnClickListener {
-            MediaHelp.Builder(this).startGallery()
+            MediaHelp.Builder(this).setSpanCount(3).startGallery()
         }
         mCapture.setOnClickListener {
             openSystemCamera(Params.REQUEST_SYSTEM_CAPTURE_CODE
