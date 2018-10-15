@@ -28,11 +28,7 @@ class GalleryAdapter(private val ctx: Context, private val mediaBeans: MutableLi
 
         mediaBean?.let {
             (p0.itemView.layoutParams as? RecyclerView.LayoutParams)?.apply {
-                if (it.fileHeight == 0) {
-                    this.height = this.width
-                } else {
-                    this.height = it.fileHeight
-                }
+                this.height = this.width
                 p0.itemView.layoutParams = this
 
                 p0.ivShowImg.setImageBitmap(BitmapFactory.decodeFile(it.filePath))
@@ -47,6 +43,16 @@ class GalleryAdapter(private val ctx: Context, private val mediaBeans: MutableLi
         this.notifyDataSetChanged()
     }
 
+    fun resetData(mediaBeans: MutableList<MediaBean>) {
+        this.mediaBeans.clear()
+        this.mediaBeans.addAll(mediaBeans)
+//        this.notifyItemRangeInserted(this.mediaBeans.size - mediaBeans.size, mediaBeans.size)
+        this.notifyDataSetChanged()
+    }
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+    }
 
     companion object {
         class GalleryViewHolder(convertView: View) : RecyclerView.ViewHolder(convertView) {

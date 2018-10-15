@@ -34,11 +34,15 @@ class GalleryActivity : AppCompatActivity() {
         setContentView(R.layout.activity_gallery)
         StatusBarCompat.compat(this)
 
-        mediaModel?.let {
-            mRvGallery.layoutManager = GridLayoutManager(this, it.spanCount)
-            mRvGallery.adapter = GalleryAdapter(this)
-            startImages(true, contentResolver)
+
+        mRvGallery.apply {
+            mediaModel?.let {
+                this.layoutManager = GridLayoutManager(this@GalleryActivity, it.spanCount)
+                this.adapter = GalleryAdapter(this@GalleryActivity)
+                startImages(true, contentResolver)
+            }
         }
+
     }
 
 
@@ -95,6 +99,12 @@ class GalleryActivity : AppCompatActivity() {
                 val path = mCursor.getString(mCursor
                     .getColumnIndex(MediaStore.Images.Media.DATA))
 
+                val imgWidth = mCursor.getInt(mCursor
+                    .getColumnIndex(MediaStore.Images.Media.WIDTH))
+
+                val imgHeight = mCursor.getInt(mCursor
+                    .getColumnIndex(MediaStore.Images.Media.HEIGHT))
+
                 val file = File(path)
                 if (!file.exists()) {
                     continue
@@ -106,19 +116,19 @@ class GalleryActivity : AppCompatActivity() {
                 if (!mGroupMap.containsKey(ALL_PHOTOS)) {
                     dirNames.add(ALL_PHOTOS)
                     val chileList = ArrayList<PhotoBean>()
-                    chileList.add(PhotoBean(path, ALL_PHOTOS))
+                    chileList.add(PhotoBean(path, imgWidth, imgHeight, ALL_PHOTOS))
                     mGroupMap[ALL_PHOTOS] = chileList
                 } else {
-                    mGroupMap[ALL_PHOTOS]?.add(PhotoBean(path, ALL_PHOTOS))
+                    mGroupMap[ALL_PHOTOS]?.add(PhotoBean(path, imgWidth, imgHeight, ALL_PHOTOS))
                 }
                 // save by parent name
                 if (!mGroupMap.containsKey(parentName)) {
                     dirNames.add(parentName)
                     val chileList = ArrayList<PhotoBean>()
-                    chileList.add(PhotoBean(path, parentName))
+                    chileList.add(PhotoBean(path, imgWidth, imgHeight, parentName))
                     mGroupMap[parentName] = chileList
                 } else {
-                    mGroupMap[parentName]?.add(PhotoBean(path, parentName))
+                    mGroupMap[parentName]?.add(PhotoBean(path, imgWidth, imgHeight, parentName))
                 }
 
                 // 每100条发送一次event
@@ -138,7 +148,7 @@ class GalleryActivity : AppCompatActivity() {
     fun refreshImages(groupMap: LinkedHashMap<String, MutableList<PhotoBean>>, finish: Boolean = false) {
         runOnUiThread {
             groupMap[ALL_PHOTOS]?.let {
-                mGalleryAdapter.loadData(mutableListOf<MediaBean>().apply {
+                mGalleryAdapter.resetData(mutableListOf<MediaBean>().apply {
                     it.forEach {
                         this.add(it.parseToMediaBean())
                     }
@@ -231,7 +241,7 @@ class GalleryActivity : AppCompatActivity() {
     fun refreshVideo(groupMap: LinkedHashMap<String, MutableList<VideoBean>>, finish: Boolean = false) {
         runOnUiThread {
             groupMap[ALL_PHOTOS]?.let {
-                mGalleryAdapter.loadData(mutableListOf<MediaBean>().apply {
+                mGalleryAdapter.resetData(mutableListOf<MediaBean>().apply {
                     it.forEach {
                         this.add(it.parseToMediaBean())
                     }

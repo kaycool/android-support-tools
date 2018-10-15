@@ -27,8 +27,10 @@ data class VideoBean(val videoPath: String, val videoDuration: Double
         , fileName = videoName, fileTitle = videoTitle, select = videoSelect)
 }
 
-data class PhotoBean(val photoPath: String, val photoDir: String, var photoSelect: Boolean = false) {
-    fun parseToMediaBean(): MediaBean = MediaBean(filePath = photoPath, select = photoSelect)
+data class PhotoBean(val photoPath: String, val photoWidth: Int = 0, val photoHeight: Int = 0
+                     , val photoDir: String, var photoSelect: Boolean = false) {
+    fun parseToMediaBean(): MediaBean = MediaBean(filePath = photoPath, fileWidth = photoWidth
+        , fileHeight = photoHeight, select = photoSelect)
 }
 
 class DirWithMedia : Serializable {
