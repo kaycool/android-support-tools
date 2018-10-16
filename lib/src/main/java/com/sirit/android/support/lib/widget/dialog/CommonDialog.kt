@@ -22,12 +22,16 @@ class CommonDialog(builder: Builder) : BaseDialog(builder.ctx) {
 
 
         mDialogTitle?.let {
-            //todo view.visible and gone
+            //todo view.visible
+        }?:kotlin.run {
+            //todo view.gone
         }
 
 
         mDialogSubTitle?.let {
 
+
+        }?:kotlin.run {
 
         }
 
@@ -35,17 +39,23 @@ class CommonDialog(builder: Builder) : BaseDialog(builder.ctx) {
         mDialogContent?.let {
 
 
+        }?:kotlin.run {
+
         }
 
 
         mDialogLeftBtnRes?.let {
 
 
+        }?:kotlin.run {
+
         }
 
 
         mDialogRightBtnRes?.let {
 
+
+        }?:kotlin.run {
 
         }
     }
