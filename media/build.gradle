@@ -27,7 +27,5 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation project(':widget')
-    implementation project(':extention')
-    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation 'com.github.kaycool:StrongSupport:v1.0.0'
 }

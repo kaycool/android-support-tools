@@ -28,6 +28,10 @@ class GalleryActivity : AppCompatActivity(), MediaDataCallback {
         mRvGallery.apply {
             this.layoutManager = GridLayoutManager(this@GalleryActivity, 2)
             this.adapter = mGalleryAdapter
+
+            this.addItemDecoration(object : RecyclerView.ItemDecoration() {
+
+            })
         }
 
         MediaHelp.Companion.Build(this).setDataCallback(this).build().startImages(true, contentResolver)
