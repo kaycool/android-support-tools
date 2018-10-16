@@ -1,4 +1,4 @@
-package com.sirit.android.support.media
+package com.sirit.android.support.media.demo
 
 import com.sirit.android.support.lib.BasicApp
 

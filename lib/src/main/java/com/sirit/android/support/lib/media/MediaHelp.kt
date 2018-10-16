@@ -1,67 +1,46 @@
-package com.sirit.android.support.media
+package com.sirit.android.support.lib.media
 
 import android.content.ContentResolver
+import android.content.Context
 import android.database.Cursor
-import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.MediaStore
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
-import com.sirit.android.support.lib.compat.StatusBarCompat
+import android.util.Log
 import java.io.File
 import java.util.*
 
 /**
  * @author kai.w
- * @des  $des
  */
-class GalleryActivity : AppCompatActivity() {
-    val selectImages: MutableList<String> by lazy { mutableListOf<String>() }
-    val selectVideos: MutableList<VideoBean> by lazy { mutableListOf<VideoBean>() }
-    var groupMedia: DirWithMedia? = DirWithMedia()
-        private set
-    var dirMedia: DirMedia? = DirMedia()
-        private set
-    private var index = 0
+class MediaHelp private constructor(builder: Build) {
+    private final val ctx: Context by lazy { builder.ctx }
+    private final val mSpanCount: Int by lazy { builder.mSpanCount }
+    private final val mMaxSelected: Int by lazy { builder.mMaxSelected }
+    private final val mMaxShowCount: Int by lazy { builder.mMaxShowCount }
+    private final val mIsShowGift: Boolean by lazy { builder.mIsShowGift }
+    private final val mIsShowCamera: Boolean by lazy { builder.mIsShowCamera }
 
-    private val mediaModel by lazy { intent.getSerializableExtra(Params.MEDIA_MODEL) as? MediaModel? }
-    private val mRvGallery by lazy { findViewById<RecyclerView>(R.id.rvGallery) }
-    private val mGalleryAdapter by lazy { GalleryAdapter(this) }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_gallery)
-        StatusBarCompat.compat(this)
-
-        mRvGallery.apply {
-            mediaModel?.let {
-                this.layoutManager = GridLayoutManager(this@GalleryActivity, it.spanCount)
-                this.adapter = GalleryAdapter(this@GalleryActivity)
-                startImages(true, contentResolver)
-            }
-        }
-
-    }
-
+    private final val mDataCallback: MediaDataCallback? by lazy { builder.mDataCallback }
 
     fun startImages(showGif: Boolean, resolver: ContentResolver) {
         clear()
         imageThread(showGif, resolver).start()
+        Log.d("MediaHelp", "PickPhotoHelper image start")
     }
 
     fun startVideo(resolver: ContentResolver) {
         clear()
         videoThread(resolver).start()
+        Log.d("MediaHelp", "PickPhotoHelper video start")
     }
 
     fun stop() {
         clear()
+        Log.d("MediaHelp", "PickPhotoHelper stop")
     }
 
-
     private fun clear() {
-        selectImages.clear()
         groupMedia?.mDirWithPhotoMap?.clear()
         groupMedia?.mDirWithVideoMap?.clear()
         dirMedia?.dirName?.clear()
@@ -79,12 +58,14 @@ class GalleryActivity : AppCompatActivity() {
                     MediaStore.Images.Media.MIME_TYPE + "=? or "
                         + MediaStore.Images.Media.MIME_TYPE + "=? or "
                         + MediaStore.Images.Media.MIME_TYPE + "=?",
-                    arrayOf("image/jpeg", "image/png", "image/gif"), MediaStore.Images.Media.DATE_MODIFIED + " desc")//"image/x-ms-bmp"
+                    arrayOf("image/jpeg", "image/png", "image/gif")
+                    , MediaStore.Images.Media.DATE_MODIFIED + " desc")//"image/x-ms-bmp"
             } else {
                 resolver.query(mImageUri, null,
                     MediaStore.Images.Media.MIME_TYPE + "=? or "
                         + MediaStore.Images.Media.MIME_TYPE + "=?",
-                    arrayOf("image/jpeg", "image/png"), MediaStore.Images.Media.DATE_MODIFIED + " desc")
+                    arrayOf("image/jpeg", "image/png")
+                    , MediaStore.Images.Media.DATE_MODIFIED + " desc")
             }
 
             if (mCursor == null) {
@@ -137,17 +118,17 @@ class GalleryActivity : AppCompatActivity() {
 
             }
             mCursor.close()
-            this.dirMedia?.dirName = dirNames
-            this.groupMedia?.mDirWithPhotoMap = mGroupMap
+            dirMedia?.dirName = dirNames
+            groupMedia?.mDirWithPhotoMap = mGroupMap
             refreshImages(mGroupMap, finish = true)
         })
     }
 
 
     fun refreshImages(groupMap: LinkedHashMap<String, MutableList<PhotoBean>>, finish: Boolean = false) {
-        runOnUiThread {
+        Handler(Looper.getMainLooper()).post {
             groupMap[ALL_PHOTOS]?.let {
-                mGalleryAdapter.resetData(mutableListOf<MediaBean>().apply {
+                mDataCallback?.mediaCallback(mutableListOf<MediaBean>().apply {
                     it.forEach {
                         this.add(it.parseToMediaBean())
                     }
@@ -230,17 +211,17 @@ class GalleryActivity : AppCompatActivity() {
             }
             mCursor.close()
 
-            this.dirMedia?.dirName = dirNames
-            this.groupMedia?.mDirWithVideoMap = mGroupMap
+            dirMedia?.dirName = dirNames
+            groupMedia?.mDirWithVideoMap = mGroupMap
             refreshVideo(mGroupMap, finish = true)
         })
     }
 
 
     fun refreshVideo(groupMap: LinkedHashMap<String, MutableList<VideoBean>>, finish: Boolean = false) {
-        runOnUiThread {
+        Handler(Looper.getMainLooper()).post {
             groupMap[ALL_PHOTOS]?.let {
-                mGalleryAdapter.resetData(mutableListOf<MediaBean>().apply {
+                mDataCallback?.mediaCallback(mutableListOf<MediaBean>().apply {
                     it.forEach {
                         this.add(it.parseToMediaBean())
                     }
@@ -252,9 +233,58 @@ class GalleryActivity : AppCompatActivity() {
 
     companion object {
         // all photos
-        val ALL_PHOTOS = "All Photos"
+        private val ALL_PHOTOS = "All Photos"
         // all videos
-        val ALL_VIDEOS = "All Videos"
-    }
+        private val ALL_VIDEOS = "All Videos"
 
+        private var groupMedia: DirWithMedia? = DirWithMedia()
+        private var dirMedia: DirMedia? = DirMedia()
+        private var index = 0
+
+        open class Build(val ctx: Context) {
+            var mSpanCount: Int = 1
+            var mMaxSelected: Int = 1
+            var mMaxShowCount: Int = Int.MAX_VALUE
+            var mIsShowGift: Boolean = true
+            var mIsShowCamera: Boolean = true
+            var mDataCallback: MediaDataCallback? = null
+
+            fun setSpanCount(spanCount: Int): Build {
+                this.mSpanCount = spanCount
+                return this
+            }
+
+            fun setMaxSelected(maxSelected: Int): Build {
+                this.mMaxSelected = maxSelected
+                return this
+            }
+
+            fun setMaxShowCount(maxShowCount: Int): Build {
+                this.mMaxShowCount = maxShowCount
+                return this
+            }
+
+            fun setIsShowGift(isShowGift: Boolean): Build {
+                this.mIsShowGift = isShowGift
+                return this
+            }
+
+            fun setIsShowCamera(isShowCamera: Boolean): Build {
+                this.mIsShowCamera = isShowCamera
+                return this
+            }
+
+            fun setDataCallback(dataCallback: MediaDataCallback): Build {
+                this.mDataCallback = dataCallback
+                return this
+            }
+
+            fun build(): MediaHelp = MediaHelp(this)
+        }
+    }
+}
+
+
+interface MediaDataCallback {
+    fun mediaCallback(mediaList: MutableList<MediaBean>)
 }

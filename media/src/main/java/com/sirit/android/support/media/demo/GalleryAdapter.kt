@@ -1,4 +1,4 @@
-package com.sirit.android.support.media
+package com.sirit.android.support.media.demo
 
 import android.content.Context
 import android.graphics.BitmapFactory
@@ -7,12 +7,13 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.sirit.android.support.media.R
 
 /**
  * @author kai.w
  * @des  $des
  */
-class GalleryAdapter(private val ctx: Context, private val mediaBeans: MutableList<MediaBean> = mutableListOf()) : RecyclerView.Adapter<GalleryAdapter.Companion.GalleryViewHolder>() {
+class GalleryAdapter(private val ctx: Context, private val mediaBeans: MutableList<com.sirit.android.support.lib.media.MediaBean> = mutableListOf()) : RecyclerView.Adapter<GalleryAdapter.Companion.GalleryViewHolder>() {
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): GalleryViewHolder {
         val view = LayoutInflater.from(ctx).inflate(R.layout.item_gallery, p0, false)
@@ -37,13 +38,13 @@ class GalleryAdapter(private val ctx: Context, private val mediaBeans: MutableLi
     }
 
 
-    fun loadData(mediaBeans: MutableList<MediaBean>) {
+    fun loadData(mediaBeans: MutableList<com.sirit.android.support.lib.media.MediaBean>) {
         this.mediaBeans.addAll(mediaBeans)
 //        this.notifyItemRangeInserted(this.mediaBeans.size - mediaBeans.size, mediaBeans.size)
         this.notifyDataSetChanged()
     }
 
-    fun resetData(mediaBeans: MutableList<MediaBean>) {
+    fun resetData(mediaBeans: MutableList<com.sirit.android.support.lib.media.MediaBean>) {
         this.mediaBeans.clear()
         this.mediaBeans.addAll(mediaBeans)
 //        this.notifyItemRangeInserted(this.mediaBeans.size - mediaBeans.size, mediaBeans.size)
