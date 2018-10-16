@@ -1,4 +1,4 @@
-package com.sirit.android.support.widget
+package com.sirit.android.support.widget.demo
 
 import android.content.Context
 import android.support.v7.app.AppCompatActivity

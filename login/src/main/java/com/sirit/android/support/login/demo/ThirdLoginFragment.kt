@@ -1,9 +1,11 @@
-package com.sirit.android.support.login
+package com.sirit.android.support.login.demo
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.support.v7.app.AppCompatActivity
+import android.support.v4.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -16,27 +18,36 @@ import java.util.*
  * @author kai.w
  * @des  $des
  */
-abstract class ThirdLoginActivity : AppCompatActivity(), FacebookCallback<LoginResult> {
-    protected val callbackManager by lazy { CallbackManager.Factory.create() }
+abstract class ThirdLoginFragment : Fragment(), FacebookCallback<LoginResult> {
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    private val callbackManager by lazy { CallbackManager.Factory.create() }
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         LoginManager.getInstance().registerCallback(callbackManager, this)
-//        val linkContent = ShareLinkContent.Builder()
-//            .setContentUrl(Uri.parse("http://developers.facebook.com/android"))
-//            .build()
+    }
+
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
     }
 
     override fun onStart() {
         super.onStart()
     }
 
-    override fun onResume() {
-        super.onResume()
-    }
-
     override fun onPause() {
         super.onPause()
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 
     override fun onStop() {
@@ -47,11 +58,11 @@ abstract class ThirdLoginActivity : AppCompatActivity(), FacebookCallback<LoginR
         super.onDestroy()
     }
 
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         callbackManager.onActivityResult(requestCode, resultCode, data)
         super.onActivityResult(requestCode, resultCode, data)
     }
-
 
     protected fun isLoginToFb(): Boolean {
         val accessToken = AccessToken.getCurrentAccessToken()
