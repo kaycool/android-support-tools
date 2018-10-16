@@ -1,4 +1,4 @@
-package com.sirit.android.support.extention
+package com.sirit.android.support.lib.extention
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory

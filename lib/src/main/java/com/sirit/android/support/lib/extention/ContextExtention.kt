@@ -1,4 +1,4 @@
-package com.sirit.android.support.extention
+package com.sirit.android.support.lib.extention
 
 import android.app.Activity
 import android.content.Context
@@ -14,19 +14,12 @@ import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import android.net.Uri
 import android.os.Build
-import android.os.Environment
-import android.support.v4.content.ContextCompat.startActivity
-import android.support.v4.content.ContextCompat.startActivity
-import android.os.Environment.getExternalStorageDirectory
 import android.provider.Contacts
-import android.support.v4.content.ContextCompat.startActivity
 import java.util.ArrayList
-import android.support.v4.content.ContextCompat.startActivity
-import android.support.v4.content.ContextCompat.startActivity
-import android.support.v4.app.ActivityCompat.startActivityForResult
 import android.provider.MediaStore
-import android.support.v4.app.ActivityCompat.startActivityForResult
 import android.support.v4.content.FileProvider
+import com.sirit.android.support.lib.BuildConfig
+import com.sirit.android.support.lib.R
 
 
 /**

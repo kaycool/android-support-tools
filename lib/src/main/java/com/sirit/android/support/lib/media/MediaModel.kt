@@ -21,14 +21,14 @@ open class MediaBean(val filePath: String, val fileWidth: Int = 0
 data class VideoBean(val videoPath: String, val videoDuration: Double
                      , val videoWidth: Int, val videoHeight: Int
                      , val videoSize: Long, val videoName: String
-                     , val videoTitle: String, var videoSelect: Boolean = false) {
+                     , val videoTitle: String, var videoSelect: Boolean = false) : Serializable {
     fun parseToMediaBean(): MediaBean = MediaBean(filePath = videoPath, fileWidth = videoWidth
         , fileHeight = videoHeight, fileSize = videoSize
         , fileName = videoName, fileTitle = videoTitle, select = videoSelect)
 }
 
 data class PhotoBean(val photoPath: String, val photoWidth: Int = 0, val photoHeight: Int = 0
-                     , val photoDir: String, var photoSelect: Boolean = false) {
+                     , val photoDir: String, var photoSelect: Boolean = false) : Serializable {
     fun parseToMediaBean(): MediaBean = MediaBean(filePath = photoPath, fileWidth = photoWidth
         , fileHeight = photoHeight, select = photoSelect)
 }

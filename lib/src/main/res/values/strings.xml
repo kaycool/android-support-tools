@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">lib</string>
+    <string name="system_share_title_default">分享到</string>
 </resources>
