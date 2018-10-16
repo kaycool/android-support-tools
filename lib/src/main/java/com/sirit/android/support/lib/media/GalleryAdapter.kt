@@ -1,4 +1,4 @@
-package com.sirit.android.support.media.demo
+package com.sirit.android.support.lib.media
 
 import android.content.Context
 import android.graphics.BitmapFactory
@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.sirit.android.support.media.R
+import com.sirit.android.support.lib.R
 
 /**
  * @author kai.w

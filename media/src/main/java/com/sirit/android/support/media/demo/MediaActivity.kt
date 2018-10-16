@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.Button
 import com.sirit.android.support.lib.compat.StatusBarCompat
 import com.sirit.android.support.lib.extention.openSystemCamera
+import com.sirit.android.support.lib.media.MediaHelp
 import com.sirit.android.support.media.R
 import java.util.*
 
@@ -26,8 +27,7 @@ class MediaActivity : AppCompatActivity() {
         }
 
         mPicture.setOnClickListener {
-            val intent = Intent(this, GalleryActivity::class.java)
-            startActivity(intent)
+            MediaHelp.Companion.Build(this).build().showImages()
         }
         mCapture.setOnClickListener {
             openSystemCamera(Params.REQUEST_SYSTEM_CAPTURE_CODE

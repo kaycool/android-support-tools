@@ -31,13 +31,13 @@ object MediaScanHelp {
         return this
     }
 
-    fun startImages(showGif: Boolean, resolver: ContentResolver) {
+    fun scanImages(showGif: Boolean, resolver: ContentResolver) {
         clear()
         imageThread(showGif, resolver).start()
         Log.d("MediaHelp", "PickPhotoHelper image start")
     }
 
-    fun startVideo(resolver: ContentResolver) {
+    fun scanVideo(resolver: ContentResolver) {
         clear()
         videoThread(resolver).start()
         Log.d("MediaHelp", "PickPhotoHelper video start")

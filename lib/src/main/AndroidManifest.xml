@@ -12,14 +12,14 @@
             android:name=".login.ThirdLoginActivity"
             android:screenOrientation="portrait" />
 
-
         <activity
             android:name=".share.ThirdShareActivity"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".media.GalleryActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
 
     </application>
 
