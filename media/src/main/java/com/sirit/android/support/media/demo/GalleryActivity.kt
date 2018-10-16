@@ -7,8 +7,8 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import com.sirit.android.support.extention.dp2px
 import com.sirit.android.support.lib.compat.StatusBarCompat
+import com.sirit.android.support.lib.extention.dp2px
 import com.sirit.android.support.lib.media.MediaBean
 import com.sirit.android.support.lib.media.MediaDataCallback
 import com.sirit.android.support.lib.media.MediaHelp

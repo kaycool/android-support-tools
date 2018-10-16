@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.os.Environment
 import android.support.v7.app.AppCompatActivity
 import android.widget.Button
-import com.sirit.android.support.extention.openSystemCamera
 import com.sirit.android.support.lib.compat.StatusBarCompat
+import com.sirit.android.support.lib.extention.openSystemCamera
 import com.sirit.android.support.media.R
 import java.util.*
 
