@@ -9,16 +9,15 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.sirit.android.support.lib.compat.StatusBarCompat
 import com.sirit.android.support.lib.extention.dp2px
+import com.sirit.android.support.lib.media.*
 import com.sirit.android.support.lib.media.MediaBean
-import com.sirit.android.support.lib.media.MediaDataCallback
-import com.sirit.android.support.lib.media.MediaHelp
 import com.sirit.android.support.media.R
 
 /**
  * @author kai.w
  * @des  $des
  */
-class GalleryActivity : AppCompatActivity(), MediaDataCallback {
+class GalleryActivity : AppCompatActivity(), MediaScanCallback {
 
     private val mediaModel by lazy { intent.getSerializableExtra(Params.MEDIA_MODEL) as? MediaModel? }
     private val mRvGallery by lazy { findViewById<RecyclerView>(R.id.rvGallery) }
@@ -53,11 +52,11 @@ class GalleryActivity : AppCompatActivity(), MediaDataCallback {
 
                     val rem = viewPosition.rem(spanCount)
 
-                    when(rem){
-                        0->{
+                    when (rem) {
+                        0 -> {
                             outRect.right = dp2px(5f)
                         }
-                        else->{
+                        else -> {
                             outRect.left = dp2px(5f)
                         }
                     }
@@ -66,7 +65,7 @@ class GalleryActivity : AppCompatActivity(), MediaDataCallback {
             })
         }
 
-        MediaHelp.Companion.Build(this).setDataCallback(this).build().startImages(true, contentResolver)
+        MediaScanHelp.setMediaScanCallback(this).startImages(true, contentResolver)
     }
 
 
