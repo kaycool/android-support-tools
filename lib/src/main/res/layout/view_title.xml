@@ -8,7 +8,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true" />
+        android:layout_centerVertical="true"
+        android:maxLines="1" />
 
     <LinearLayout
         android:id="@+id/centerLayout"
@@ -23,7 +24,8 @@
         <TextView
             android:id="@+id/centerLeftTitle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:maxLines="1" />
 
 
         <LinearLayout
@@ -34,12 +36,14 @@
             <TextView
                 android:id="@+id/subTitle"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:maxLines="1" />
 
             <TextView
                 android:id="@+id/centerTitle"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:maxLines="1" />
 
         </LinearLayout>
 
@@ -52,7 +56,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true" />
+        android:layout_centerVertical="true"
+        android:maxLines="1" />
 
 </RelativeLayout>
 
