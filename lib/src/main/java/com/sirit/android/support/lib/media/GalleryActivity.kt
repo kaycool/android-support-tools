@@ -67,6 +67,12 @@ class GalleryActivity : AppCompatActivity(), MediaScanCallback {
     }
 
 
+    override fun onDestroy() {
+        super.onDestroy()
+        MediaScanHelp.unRegisterMediaScanCallback().clear()
+    }
+
+
     override fun mediaCallback(dirMedia: DirMedia?, groupMedia: DirWithMedia?) {
 
         groupMedia?.mDirWithPhotoMap?.let {

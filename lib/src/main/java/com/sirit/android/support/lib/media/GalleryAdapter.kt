@@ -2,18 +2,27 @@ package com.sirit.android.support.lib.media
 
 import android.content.Context
 import android.graphics.BitmapFactory
+import android.graphics.Rect
 import android.support.v7.widget.AppCompatImageView
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.sirit.android.support.lib.R
+import com.sirit.android.support.lib.extention.widthPixels
 
 /**
  * @author kai.w
  * @des  $des
  */
 class GalleryAdapter(private val ctx: Context, private val mediaBeans: MutableList<com.sirit.android.support.lib.media.MediaBean> = mutableListOf()) : RecyclerView.Adapter<GalleryAdapter.Companion.GalleryViewHolder>() {
+
+
+    init {
+
+    }
+
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): GalleryViewHolder {
         val view = LayoutInflater.from(ctx).inflate(R.layout.item_gallery, p0, false)
@@ -28,12 +37,7 @@ class GalleryAdapter(private val ctx: Context, private val mediaBeans: MutableLi
         val mediaBean = mediaBeans[p1]
 
         mediaBean?.let {
-            (p0.itemView.layoutParams as? RecyclerView.LayoutParams)?.apply {
-                this.height = this.width
-                p0.itemView.layoutParams = this
-
-                p0.ivShowImg.setImageBitmap(BitmapFactory.decodeFile(it.filePath))
-            }
+            p0.ivShowImg.setImageBitmap(BitmapFactory.decodeFile(it.filePath))
         }
     }
 
@@ -53,6 +57,20 @@ class GalleryAdapter(private val ctx: Context, private val mediaBeans: MutableLi
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
+    }
+
+    override fun onViewAttachedToWindow(holder: GalleryViewHolder) {
+        super.onViewAttachedToWindow(holder)
+        (holder.itemView?.parent as? RecyclerView?)?.let {
+            (it.layoutManager as? GridLayoutManager?)?.let {
+                val screenWidth = holder.itemView.context.widthPixels
+                val spanCount = it.spanCount
+                val outRect = Rect()
+                it.calculateItemDecorationsForChild(holder.itemView, outRect)
+                val viewWidth = screenWidth.toFloat() / spanCount - outRect.left - outRect.right
+                holder.itemView.layoutParams.height = viewWidth.toInt()
+            }
+        }
     }
 
     companion object {

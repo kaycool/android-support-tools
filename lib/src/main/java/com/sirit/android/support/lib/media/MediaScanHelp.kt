@@ -31,6 +31,11 @@ object MediaScanHelp {
         return this
     }
 
+    fun unRegisterMediaScanCallback(): MediaScanHelp {
+        this.mDataCallback = null
+        return this
+    }
+
     fun scanImages(showGif: Boolean, resolver: ContentResolver) {
         clear()
         imageThread(showGif, resolver).start()
@@ -48,7 +53,7 @@ object MediaScanHelp {
         Log.d("MediaHelp", "PickPhotoHelper stop")
     }
 
-    private fun clear() {
+    fun clear() {
         groupMedia?.mDirWithPhotoMap?.clear()
         groupMedia?.mDirWithVideoMap?.clear()
         dirMedia?.dirName?.clear()
