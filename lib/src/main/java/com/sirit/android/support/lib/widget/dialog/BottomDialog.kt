@@ -26,7 +26,7 @@ class BottomDialog(builder: Builder) : BaseDialog(builder.ctx) {
 
 
     companion object {
-        class Builder(val ctx: Context) {
+        class Builder private constructor(val ctx: Context) {
 
             fun build(): BottomDialog {
                 return BottomDialog(this)

@@ -27,7 +27,10 @@ class MediaActivity : AppCompatActivity() {
         }
 
         mPicture.setOnClickListener {
-            MediaHelp.Companion.Build(this).build().showImages()
+            MediaHelp.Companion.Build(this)
+                .setSpanCount(2)
+                .build()
+                .showImages()
         }
         mCapture.setOnClickListener {
             openSystemCamera(Params.REQUEST_SYSTEM_CAPTURE_CODE

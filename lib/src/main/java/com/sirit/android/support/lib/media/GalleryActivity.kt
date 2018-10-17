@@ -63,11 +63,27 @@ class GalleryActivity : AppCompatActivity(), MediaScanCallback {
                 }
             })
         }
-        MediaScanHelp.setMediaScanCallback(this).scanImages(true, contentResolver)
+        MediaScanHelp.registerMediaScanCallback(this).scanImages(true, contentResolver)
     }
 
-    override fun mediaCallback(mediaList: MutableList<MediaBean>) {
-        mGalleryAdapter.loadData(mediaList)
-    }
 
+    override fun mediaCallback(dirMedia: DirMedia?, groupMedia: DirWithMedia?) {
+
+        groupMedia?.mDirWithPhotoMap?.let {
+            mGalleryAdapter.loadData(mutableListOf<MediaBean>().apply {
+                it[dirMedia!!.dirName[0]]?.forEach {
+                    this.add(it.parseToMediaBean())
+                }
+            })
+        }
+
+        groupMedia?.mDirWithVideoMap?.let {
+            mGalleryAdapter.loadData(mutableListOf<MediaBean>().apply {
+                it[dirMedia!!.dirName[0]]?.forEach {
+                    this.add(it.parseToMediaBean())
+                }
+            })
+        }
+
+    }
 }

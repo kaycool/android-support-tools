@@ -23,7 +23,7 @@ class CommonDialog(builder: Builder) : BaseDialog(builder.ctx) {
 
         mDialogTitle?.let {
             //todo view.visible
-        }?:kotlin.run {
+        } ?: kotlin.run {
             //todo view.gone
         }
 
@@ -31,7 +31,7 @@ class CommonDialog(builder: Builder) : BaseDialog(builder.ctx) {
         mDialogSubTitle?.let {
 
 
-        }?:kotlin.run {
+        } ?: kotlin.run {
 
         }
 
@@ -39,7 +39,7 @@ class CommonDialog(builder: Builder) : BaseDialog(builder.ctx) {
         mDialogContent?.let {
 
 
-        }?:kotlin.run {
+        } ?: kotlin.run {
 
         }
 
@@ -47,7 +47,7 @@ class CommonDialog(builder: Builder) : BaseDialog(builder.ctx) {
         mDialogLeftBtnRes?.let {
 
 
-        }?:kotlin.run {
+        } ?: kotlin.run {
 
         }
 
@@ -55,14 +55,14 @@ class CommonDialog(builder: Builder) : BaseDialog(builder.ctx) {
         mDialogRightBtnRes?.let {
 
 
-        }?:kotlin.run {
+        } ?: kotlin.run {
 
         }
     }
 
 
     companion object {
-        class Builder(val ctx: Context) {
+        class Builder private constructor(val ctx: Context) {
             var mDialogTitle: String? = null
             var mDialogSubTitle: String? = null
             var mDialogContent: String? = null

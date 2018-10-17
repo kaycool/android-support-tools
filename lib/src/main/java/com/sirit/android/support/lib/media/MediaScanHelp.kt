@@ -16,9 +16,9 @@ import java.util.LinkedHashMap
  */
 object MediaScanHelp {
     // all photos
-    private val ALL_PHOTOS = "All Photos"
+    val ALL_PHOTOS = "All Photos"
     // all videos
-    private val ALL_VIDEOS = "All Videos"
+    val ALL_VIDEOS = "All Videos"
 
     private var groupMedia: DirWithMedia? = DirWithMedia()
     private var dirMedia: DirMedia? = DirMedia()
@@ -26,7 +26,7 @@ object MediaScanHelp {
 
     private var mDataCallback: MediaScanCallback? = null
 
-    fun setMediaScanCallback(dataCallback: MediaScanCallback): MediaScanHelp {
+    fun registerMediaScanCallback(dataCallback: MediaScanCallback): MediaScanHelp {
         this.mDataCallback = dataCallback
         return this
     }
@@ -34,13 +34,13 @@ object MediaScanHelp {
     fun scanImages(showGif: Boolean, resolver: ContentResolver) {
         clear()
         imageThread(showGif, resolver).start()
-        Log.d("MediaHelp", "PickPhotoHelper image start")
+        Log.d("MediaHelp", "MediaHelp image start")
     }
 
     fun scanVideo(resolver: ContentResolver) {
         clear()
         videoThread(resolver).start()
-        Log.d("MediaHelp", "PickPhotoHelper video start")
+        Log.d("MediaHelp", "MediaHelp video start")
     }
 
     fun stop() {
@@ -121,26 +121,24 @@ object MediaScanHelp {
 
                 // 每100条发送一次event
                 if (mGroupMap[ALL_PHOTOS]?.size?.rem(100) == 0) {
-                    refreshImages(mGroupMap)
+                    refreshImages()
                 }
 
             }
             mCursor.close()
             dirMedia?.dirName = dirNames
             groupMedia?.mDirWithPhotoMap = mGroupMap
-            refreshImages(mGroupMap, finish = true)
+            refreshImages(finish = true)
         })
     }
 
 
-    fun refreshImages(groupMap: LinkedHashMap<String, MutableList<PhotoBean>>, finish: Boolean = false) {
+    private fun refreshImages(finish: Boolean = false) {
         Handler(Looper.getMainLooper()).post {
-            groupMap[ALL_PHOTOS]?.let {
-                mDataCallback?.mediaCallback(mutableListOf<MediaBean>().apply {
-                    it.forEach {
-                        this.add(it.parseToMediaBean())
-                    }
-                })
+            if (finish) {
+                mDataCallback?.mediaCallback(dirMedia, groupMedia)
+            } else {
+                mDataCallback?.mediaCallback(DirMedia().apply { this.dirName.add(ALL_PHOTOS) }, groupMedia)
             }
         }
     }
@@ -214,26 +212,24 @@ object MediaScanHelp {
 
                 // 每100条发送一次event
                 if (mGroupMap[ALL_VIDEOS]?.size?.rem(100) == 0) {
-                    refreshVideo(mGroupMap)
+                    refreshVideo()
                 }
             }
             mCursor.close()
 
             dirMedia?.dirName = dirNames
             groupMedia?.mDirWithVideoMap = mGroupMap
-            refreshVideo(mGroupMap, finish = true)
+            refreshVideo(true)
         })
     }
 
 
-    fun refreshVideo(groupMap: LinkedHashMap<String, MutableList<VideoBean>>, finish: Boolean = false) {
+    private fun refreshVideo(finish: Boolean = false) {
         Handler(Looper.getMainLooper()).post {
-            groupMap[ALL_PHOTOS]?.let {
-                mDataCallback?.mediaCallback(mutableListOf<MediaBean>().apply {
-                    it.forEach {
-                        this.add(it.parseToMediaBean())
-                    }
-                })
+            if (finish) {
+                mDataCallback?.mediaCallback(dirMedia, groupMedia)
+            } else {
+                mDataCallback?.mediaCallback(DirMedia().apply { this.dirName.add(ALL_VIDEOS) }, groupMedia)
             }
         }
     }
@@ -241,5 +237,5 @@ object MediaScanHelp {
 
 
 interface MediaScanCallback {
-    fun mediaCallback(mediaList: MutableList<MediaBean>)
+    fun mediaCallback(dirMedia: DirMedia?, groupMedia: DirWithMedia?)
 }
