@@ -1,8 +1,6 @@
 package com.sirit.android.support.lib.extention
 
-import android.app.Activity
-import android.os.Build
-import android.support.annotation.RequiresApi
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.util.TypedValue
 import android.view.View
@@ -16,7 +14,8 @@ import com.sirit.android.support.lib.widget.help.ViewTitleHelp
  * @des  $des
  */
 
-fun Activity.replaceToolbarLayout(toolbar: Toolbar, viewTitleHelp: ViewTitleHelp, titleClick: TitleClick?=null) {
+fun AppCompatActivity.replaceToolbarLayout(toolbar: Toolbar, viewTitleHelp: ViewTitleHelp, titleClick: TitleClick? = null) {
+    setSupportActionBar(toolbar)
     layoutInflater.inflate(R.layout.view_title, toolbar)
 
     val leftTitle = findViewById<TextView>(R.id.leftTitle)
@@ -25,14 +24,17 @@ fun Activity.replaceToolbarLayout(toolbar: Toolbar, viewTitleHelp: ViewTitleHelp
     val subTitle = findViewById<TextView>(R.id.subTitle)
     val centerTitle = findViewById<TextView>(R.id.centerTitle)
     val rightTitle = findViewById<TextView>(R.id.rightTitle)
+    val viewTitleLine = findViewById<View>(R.id.viewTitleLine)
 
-    toolbar.layoutParams.height = viewTitleHelp.mTitleHeight
-
+    if (viewTitleHelp.mTitleHeight > 0) {
+        toolbar.layoutParams.height = viewTitleHelp.mTitleHeight
+    }
 
     leftTitle?.apply {
         viewTitleHelp.mTitleLeftData?.let {
 
             it.titleText?.let {
+                leftTitle.text = it.titleText
                 leftTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, it.textSize.toFloat())
                 leftTitle.setTextColor(it.textColor)
 
@@ -53,6 +55,7 @@ fun Activity.replaceToolbarLayout(toolbar: Toolbar, viewTitleHelp: ViewTitleHelp
         viewTitleHelp.mTitleCenterLeftData?.let {
 
             it.titleText?.let {
+                centerLeftTitle.text = it.titleText
                 centerLeftTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, it.textSize.toFloat())
                 centerLeftTitle.setTextColor(it.textColor)
 
@@ -72,6 +75,7 @@ fun Activity.replaceToolbarLayout(toolbar: Toolbar, viewTitleHelp: ViewTitleHelp
     subTitle?.apply {
         viewTitleHelp.mTitleSubData?.let {
             it.titleText?.let {
+                subTitle.text = it.titleText
                 subTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, it.textSize.toFloat())
                 subTitle.setTextColor(it.textColor)
 
@@ -90,6 +94,7 @@ fun Activity.replaceToolbarLayout(toolbar: Toolbar, viewTitleHelp: ViewTitleHelp
     centerTitle?.apply {
         viewTitleHelp.mTitleCenterData?.let {
             it.titleText?.let {
+                centerTitle.text = it.titleText
                 centerTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, it.textSize.toFloat())
                 centerTitle.setTextColor(it.textColor)
 
@@ -106,8 +111,9 @@ fun Activity.replaceToolbarLayout(toolbar: Toolbar, viewTitleHelp: ViewTitleHelp
 
 
     rightTitle?.apply {
-        viewTitleHelp.mTitleCenterData?.let {
+        viewTitleHelp.mTitleRightData?.let {
             it.titleText?.let {
+                rightTitle.text = it.titleText
                 rightTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, it.textSize.toFloat())
                 rightTitle.setTextColor(it.textColor)
 
@@ -119,6 +125,14 @@ fun Activity.replaceToolbarLayout(toolbar: Toolbar, viewTitleHelp: ViewTitleHelp
                 rightTitle.layoutParams.height = it.height
                 rightTitle.background = mipmapDrawable(it.iconRes)
             }
+        }
+    }
+
+    viewTitleLine?.apply {
+        viewTitleHelp.mTitleLineData?.let {
+            this.visibility = View.VISIBLE
+            this.setBackgroundColor(it.lineColor)
+            this.layoutParams.height = it.lineHeight
         }
     }
 

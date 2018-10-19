@@ -14,6 +14,7 @@ class ViewTitleHelp(builder: ViewTitleBuilder) {
     val mTitleSubData: TitleData? by lazy { builder.mTitleSubData }
     val mTitleCenterData: TitleData? by lazy { builder.mTitleCenterData }
     val mTitleRightData: TitleData? by lazy { builder.mTitleRightData }
+    val mTitleLineData: TitleLine? by lazy { builder.mTitleLineData }
 
     companion object {
         class ViewTitleBuilder {
@@ -23,6 +24,7 @@ class ViewTitleHelp(builder: ViewTitleBuilder) {
             var mTitleSubData: TitleData? = null
             var mTitleCenterData: TitleData? = null
             var mTitleRightData: TitleData? = null
+            var mTitleLineData: TitleLine? = null
 
             fun setTitleHeight(titleHeight: Int): ViewTitleBuilder {
                 this.mTitleHeight = titleHeight
@@ -56,15 +58,23 @@ class ViewTitleHelp(builder: ViewTitleBuilder) {
             }
 
 
+            fun setTitleLineData(titleLine: TitleLine): ViewTitleBuilder {
+                this.mTitleLineData = titleLine
+                return this
+            }
+
+
             fun build() = ViewTitleHelp(this)
         }
 
 
         data class TitleData(val titleText: TitleText? = null, val titleIcon: TitleIcon? = null) : Serializable
 
-        data class TitleText(val textSize: Int, val textColor: Int, val margin: Rect) : Serializable
+        data class TitleText(val titleText: String, val textSize: Int, val textColor: Int, val margin: Rect) : Serializable
 
         data class TitleIcon(val iconRes: Int, val width: Int, val height: Int, val margin: Rect) : Serializable
+
+        data class TitleLine(val lineHeight: Int, val lineColor: Int) : Serializable
 
     }
 

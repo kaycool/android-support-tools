@@ -13,11 +13,11 @@
 
     <LinearLayout
         android:id="@+id/centerLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_toLeftOf="@+id/leftTitle"
-        android:layout_toRightOf="@+id/rightTitle"
+        android:layout_toLeftOf="@+id/rightTitle"
+        android:layout_toRightOf="@+id/leftTitle"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -58,6 +58,13 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:maxLines="1" />
+
+    <View
+        android:id="@+id/viewTitleLine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone" />
 
 </RelativeLayout>
 
