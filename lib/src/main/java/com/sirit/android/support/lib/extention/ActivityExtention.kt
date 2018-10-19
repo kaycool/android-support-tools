@@ -25,6 +25,8 @@ fun AppCompatActivity.replaceToolbarLayout(toolbar: Toolbar, viewTitleHelp: View
     val centerTitle = findViewById<TextView>(R.id.centerTitle)
     val rightTitle = findViewById<TextView>(R.id.rightTitle)
     val viewTitleLine = findViewById<View>(R.id.viewTitleLine)
+    val rlLeftArea = findViewById<View>(R.id.rlLeftArea)
+    val rlRightArea = findViewById<View>(R.id.rlRightArea)
 
     if (viewTitleHelp.mTitleHeight > 0) {
         toolbar.layoutParams.height = viewTitleHelp.mTitleHeight
@@ -136,10 +138,17 @@ fun AppCompatActivity.replaceToolbarLayout(toolbar: Toolbar, viewTitleHelp: View
         }
     }
 
+    rlLeftArea.setOnClickListener { titleClick?.titleClick(TitleClickEnum.LEFT, it) }
+    rlRightArea.setOnClickListener { titleClick?.titleClick(TitleClickEnum.RIGHT, it) }
+    centerLeftTitle.setOnClickListener { titleClick?.titleClick(TitleClickEnum.CENTER, it) }
 }
 
 
 interface TitleClick {
+    fun titleClick(titleClickEnum: TitleClickEnum, clickView: View)
+}
 
+enum class TitleClickEnum {
+    LEFT, CENTER, RIGHT
 }
 

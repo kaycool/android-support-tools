@@ -3,21 +3,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/leftTitle"
+    <RelativeLayout
+        android:id="@+id/rlLeftArea"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:maxLines="1" />
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true">
+
+        <TextView
+            android:id="@+id/leftTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:maxLines="1" />
+
+    </RelativeLayout>
+
 
     <LinearLayout
         android:id="@+id/centerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_toLeftOf="@+id/rightTitle"
-        android:layout_toRightOf="@+id/leftTitle"
+        android:layout_toLeftOf="@+id/rlRightArea"
+        android:layout_toRightOf="@+id/rlLeftArea"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -51,13 +59,20 @@
     </LinearLayout>
 
 
-    <TextView
-        android:id="@+id/rightTitle"
+    <RelativeLayout
+        android:id="@+id/rlRightArea"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:maxLines="1" />
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true">
+
+        <TextView
+            android:id="@+id/rightTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:maxLines="1" />
+
+    </RelativeLayout>
 
     <View
         android:id="@+id/viewTitleLine"
