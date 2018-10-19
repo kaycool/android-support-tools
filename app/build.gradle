@@ -64,5 +64,5 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.github.kaycool:StrongSupport:v1.0.1'
+    implementation 'com.github.kaycool:StrongSupport:1.0.2'
 }
