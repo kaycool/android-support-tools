@@ -59,7 +59,7 @@ val Context.heightPixels: Int
         return 0
     }
 
-fun Context.color(color: Int) = ContextCompat.getColor(this, color)
+fun Context.color(color: Int):Int = ContextCompat.getColor(this, color)
 
 fun Context.dp2px(dpValue: Float): Int {
     val scale = resources.displayMetrics.density
