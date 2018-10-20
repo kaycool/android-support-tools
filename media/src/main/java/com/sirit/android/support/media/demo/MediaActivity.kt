@@ -28,8 +28,17 @@ class MediaActivity : AppCompatActivity() {
 
         replaceToolbarLayout(toolbar = toolbar
             , viewTitleHelp = ViewTitleHelp.Companion.ViewTitleBuilder()
-            .setTitleLeftData(ViewTitleHelp.Companion.TitleData(titleIcon = ViewTitleHelp.Companion.TitleIcon(android.R.drawable.arrow_up_float, dp2px(15f), dp2px(15f), Rect())))
-            .setTitleCenterData(ViewTitleHelp.Companion.TitleData(titleText = ViewTitleHelp.Companion.TitleText("我是测试", dp2px(20f), color(R.color.support_colorAccent), Rect())))
+            .setTitleLeftData(ViewTitleHelp.Companion.TitleData(
+                titleIcon = ViewTitleHelp.Companion.TitleIcon(
+                    android.R.drawable.arrow_up_float,
+                    dp2px(15f),
+                    dp2px(15f),
+                    Rect())))
+            .setTitleCenterData(ViewTitleHelp.Companion.TitleData(
+                titleText = ViewTitleHelp.Companion.TitleText(
+                    "我是测试", dp2px(20f)
+                    , color(R.color.support_colorAccent)
+                    , Rect())))
             .build())
 
 
