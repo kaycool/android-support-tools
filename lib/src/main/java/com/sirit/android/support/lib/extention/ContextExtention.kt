@@ -1,6 +1,7 @@
 package com.sirit.android.support.lib.extention
 
 import android.app.Activity
+import android.content.ContentUris
 import android.content.Context
 import android.content.res.Configuration
 import android.graphics.drawable.Drawable
@@ -9,17 +10,20 @@ import android.support.graphics.drawable.VectorDrawableCompat
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.res.ResourcesCompat
 import android.util.Log
-import java.io.File
 import android.content.Intent
+import android.database.Cursor
 import android.graphics.drawable.GradientDrawable
 import android.net.Uri
 import android.os.Build
+import android.os.Environment
 import android.provider.Contacts
-import java.util.ArrayList
+import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.support.v4.content.FileProvider
 import com.sirit.android.support.lib.BuildConfig
 import com.sirit.android.support.lib.R
+import java.io.*
+import java.util.*
 
 
 /**
@@ -59,7 +63,7 @@ val Context.heightPixels: Int
         return 0
     }
 
-fun Context.color(color: Int):Int = ContextCompat.getColor(this, color)
+fun Context.color(color: Int): Int = ContextCompat.getColor(this, color)
 
 fun Context.dp2px(dpValue: Float): Int {
     val scale = resources.displayMetrics.density
@@ -115,6 +119,219 @@ fun Context.createShapeDrawable(radiusPx: Float
     this.cornerRadius = radiusPx
     this.setColor(solidColor)
     this.setStroke(strokeWidth, strokeColor)
+}
+
+fun Context.getUri(file: File): Uri? {
+    try {
+        return if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+            FileProvider.getUriForFile(this, this.packageName, file)
+        } else {
+            Uri.fromFile(file)
+        }
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+    return null
+}
+
+val Context.saveDir: File
+    get() {
+        val dir = File(Environment.getExternalStorageDirectory().absolutePath + "/${string(R.string.app_name)}")
+        if (!dir.exists()) {
+            dir.mkdir()
+        }
+        return dir
+    }
+
+val Context.externalImgDir: String
+    get() {
+        val path = externalCacheDir.absolutePath + "/img"
+        var file = File(path)
+        if (!file.exists()) {
+            file.mkdirs()
+        }
+        return path
+    }
+val Context.messageCacheDir: String
+    get() {
+        return externalCacheDir.absolutePath + "/message_cache"
+    }
+
+
+/**======================================获取系统文件分享到app的文件路径============================================**/
+
+/**
+ * @param uri The Uri to check.
+ * @return Whether the Uri authority is ExternalStorageProvider.
+ */
+fun isExternalStorageDocument(uri: Uri): Boolean {
+    return "com.android.externalstorage.documents" == uri.authority
+}
+
+/**
+ * @param uri The Uri to check.
+ * @return Whether the Uri authority is DownloadsProvider.
+ */
+fun isDownloadsDocument(uri: Uri): Boolean {
+    return "com.android.providers.downloads.documents" == uri.authority
+}
+
+/**
+ * @param uri The Uri to check.
+ * @return Whether the Uri authority is MediaProvider.
+ */
+fun isMediaDocument(uri: Uri): Boolean {
+    return "com.android.providers.media.documents" == uri.authority
+}
+
+/**
+ * @param uri The Uri to check.
+ * @return Whether the Uri authority is Google Photos.
+ */
+fun isGooglePhotosUri(uri: Uri): Boolean {
+    return uri.authority == "com.google.android.apps.photos.content"
+}
+
+fun isNewGooglePhotosUri(uri: Uri): Boolean {
+    return "com.google.android.apps.photos.contentprovider" == uri.authority
+}
+
+fun Context.getSystemFilePathForUri(uri: Uri): String {
+    return when {
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
+            && DocumentsContract.isDocumentUri(this, uri) -> {
+            when {
+                isExternalStorageDocument(uri) -> {
+                    val docId = DocumentsContract.getDocumentId(uri)
+                    val split = docId.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                    val type = split[0]
+                    return if ("primary".equals(type, ignoreCase = true)) {
+                        Environment.getExternalStorageDirectory().toString() + "/" + split[1]
+                    } else {
+                        ""
+                    }
+                }
+
+                isDownloadsDocument(uri) -> {
+                    val id = DocumentsContract.getDocumentId(uri)
+                    if (!id.isNullOrEmpty() && id.startsWith("raw:")) {
+                        return id.replaceFirst("raw:", "")
+                    }
+                    return try {
+                        val contentUri = ContentUris.withAppendedId(
+                            Uri.parse("content://downloads/public_downloads"), id.toLong())
+                        getDataColumn(this, contentUri, null, null)
+                    } catch (e: NumberFormatException) {
+                        ""
+                    }
+                }
+
+                isMediaDocument(uri) -> {
+                    val docId = DocumentsContract.getDocumentId(uri)
+                    val split = docId.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                    val type = split[0]
+                    val contentUri: Uri? = when (type) {
+                        "image" -> MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                        "video" -> MediaStore.Video.Media.EXTERNAL_CONTENT_URI
+                        "audio" -> MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+                        else -> null
+                    }
+
+                    val selection = "_id=?"
+                    val selectionArgs = arrayOf(split[1])
+                    return getDataColumn(this, contentUri, selection, selectionArgs)
+                }
+                else -> ""
+            }
+        }
+
+        "content".equals(uri.scheme, ignoreCase = true) -> {
+            return when {
+                isGooglePhotosUri(uri) -> uri.lastPathSegment ?: ""
+                isNewGooglePhotosUri(uri) -> getPathFromInputStreamUri(this, uri) ?: ""
+                else -> getDataColumn(this, uri, null, null)
+            }
+        }
+
+        "file".equals(uri.scheme, ignoreCase = true) -> {
+            return uri.path ?: ""
+        }
+
+        else -> ""
+    }
+}
+
+
+/**
+ * Get the value of the data column for this Uri. This is useful for
+ * MediaStore Uris, and other file-based ContentProviders.
+ *
+ * @param uri           The Uri to query.
+ * @param selection     (Optional) Filter used in the query.
+ * @param selectionArgs (Optional) Selection arguments used in the query.
+ * @return The value of the _data column, which is typically a file path.
+ */
+fun getDataColumn(ctx: Context, uri: Uri?, selection: String?, selectionArgs: Array<String>?): String {
+    var cursor: Cursor? = null
+    val column = MediaStore.MediaColumns.DATA
+    val projection = arrayOf(column)
+
+    var filePath = ""
+
+    try {
+        cursor = ctx.contentResolver.query(uri, projection, selection, selectionArgs, null)
+        cursor?.let {
+            it.moveToFirst()
+            val index = it.getColumnIndexOrThrow(column)
+            filePath = it.getString(index)
+        }
+    } catch (e: java.lang.Exception) {
+        e.printStackTrace()
+    } finally {
+        cursor?.close()
+    }
+
+    return filePath
+}
+
+private fun getPathFromInputStreamUri(ctx: Context, uri: Uri): String? {
+    var inputStream: InputStream? = null
+    var outputStream: FileOutputStream? = null
+    var filePath: String? = null
+
+    if (uri.authority != null) {
+        try {
+            val outputFile = File(ctx.externalImgDir, "${UUID.randomUUID()}.jpg")
+            inputStream = ctx.contentResolver.openInputStream(uri)
+
+            outputStream = FileOutputStream(outputFile)
+
+            val b = ByteArray(1024)
+            var n = 0
+            while (inputStream.read(b).apply { n = this } != -1) {
+                outputStream.write(b, 0, n)
+            }
+            filePath = outputFile.path
+
+        } catch (e: FileNotFoundException) {
+            e.printStackTrace()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        } finally {
+            try {
+                inputStream?.close()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+            try {
+                outputStream?.close()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    return filePath
 }
 
 
