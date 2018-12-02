@@ -56,3 +56,9 @@ fun Long.formatYMdDot(): String {
         yearFormat.format(Date(this@formatYMdDot * 1000))
     }
 }
+
+
+fun Long.getYear():String{
+    val calendar = java.util.Calendar.getInstance()
+
+}
