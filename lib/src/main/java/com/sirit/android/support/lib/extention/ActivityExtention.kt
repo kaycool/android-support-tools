@@ -1,9 +1,13 @@
 package com.sirit.android.support.lib.extention
 
+import android.app.Activity
+import android.graphics.Color
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.util.TypedValue
 import android.view.View
+import android.view.WindowManager
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.sirit.android.support.lib.R
@@ -141,6 +145,18 @@ fun AppCompatActivity.replaceToolbarLayout(toolbar: Toolbar, viewTitleHelp: View
     rlLeftArea.setOnClickListener { titleClick?.titleClick(TitleClickEnum.LEFT, it) }
     rlRightArea.setOnClickListener { titleClick?.titleClick(TitleClickEnum.RIGHT, it) }
     centerLeftTitle.setOnClickListener { titleClick?.titleClick(TitleClickEnum.CENTER, it) }
+}
+
+
+fun Activity.transparentStatusBar(){
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.statusBarColor = Color.TRANSPARENT
+    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+    }
 }
 
 
