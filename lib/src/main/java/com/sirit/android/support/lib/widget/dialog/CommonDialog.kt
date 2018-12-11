@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.DialogTitle
+import com.sirit.android.support.lib.R
 
 /**
  * @author kai.w
@@ -19,7 +20,7 @@ class CommonDialog(builder: Builder) : BaseDialog(builder.ctx) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        setContentView(R.layout.dialog_common)
 
         mDialogTitle?.let {
             //todo view.visible
