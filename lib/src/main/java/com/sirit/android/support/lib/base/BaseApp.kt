@@ -8,7 +8,7 @@ import android.support.multidex.MultiDex
  * @author kai.w
  * @des  $des
  */
-class BaseApp: Application() {
+open class BaseApp: Application() {
 
     override fun onCreate() {
         super.onCreate()
