@@ -14,6 +14,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
             android:maxLines="1" />
 
     </RelativeLayout>
@@ -33,7 +34,8 @@
             android:id="@+id/centerLeftTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxLines="1" />
+            android:maxLines="1"
+            android:visibility="gone" />
 
 
         <LinearLayout
@@ -45,7 +47,8 @@
                 android:id="@+id/subTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/centerTitle"

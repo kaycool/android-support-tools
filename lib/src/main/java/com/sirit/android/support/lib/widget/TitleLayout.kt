@@ -41,33 +41,38 @@ class TitleLayout : FrameLayout {
     }
 
     fun setCenterLeftTitle(textSize: Float, textColor: Int, titleText: String) {
+        centerLeftTitle.visibility = View.VISIBLE
         centerLeftTitle.text = titleText
         centerLeftTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize)
         centerLeftTitle.setTextColor(textColor)
     }
 
     fun setCenterLeftIcon(iconWidth: Int, iconHeight: Int, drawableId: Int) {
+        centerLeftTitle.visibility = View.VISIBLE
         centerLeftTitle.layoutParams.width = iconWidth
         centerLeftTitle.layoutParams.height = iconHeight
         centerLeftTitle.background = context.mipmapDrawable(drawableId)
     }
 
     fun setSubTitle(textSize: Float, textColor: Int, titleText: String) {
+        subTitle.visibility = View.VISIBLE
         subTitle.text = titleText
         subTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize)
         subTitle.setTextColor(textColor)
     }
 
     fun setSubIcon(iconWidth: Int, iconHeight: Int, drawableId: Int) {
+        subTitle.visibility = View.VISIBLE
         subTitle.layoutParams.width = iconWidth
         subTitle.layoutParams.height = iconHeight
         subTitle.background = context.mipmapDrawable(drawableId)
     }
 
-    fun setCenterTitle(textSize: Float, textColor: Int, titleText: String) {
+    fun setCenterTitle(textSize: Float, textColor: Int, titleText: String, isBold: Boolean = false) {
         centerTitle.text = titleText
         centerTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize)
         centerTitle.setTextColor(textColor)
+        centerTitle.paint.isFakeBoldText = isBold
     }
 
     fun setCenterIcon(iconWidth: Int, iconHeight: Int, drawableId: Int) {
