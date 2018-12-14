@@ -13,6 +13,7 @@ import android.widget.TextView
 import com.sirit.android.support.lib.R
 import com.sirit.android.support.lib.widget.help.ViewTitleHelp
 
+
 /**
  * @author kai.w
  * @des  $des
@@ -148,15 +149,14 @@ fun AppCompatActivity.replaceToolbarLayout(toolbar: Toolbar, viewTitleHelp: View
 }
 
 
-fun Activity.transparentStatusBar(){
+fun Activity.transparentStatusBar() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = Color.TRANSPARENT
     } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        val localLayoutParams = window.attributes
+        localLayoutParams.flags = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS or localLayoutParams.flags
     }
+    window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
 }
 
 
