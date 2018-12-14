@@ -46,7 +46,7 @@ fun AppCompatActivity.replaceToolbarLayout(toolbar: Toolbar, viewTitleHelp: View
                 leftTitle.setTextColor(it.textColor)
 
                 (leftTitle.layoutParams as? RelativeLayout.LayoutParams?)
-                    ?.setMargins(it.margin.left, it.margin.top, it.margin.right, it.margin.bottom)
+                        ?.setMargins(it.margin.left, it.margin.top, it.margin.right, it.margin.bottom)
             }
             it.titleIcon?.let {
                 leftTitle.layoutParams.width = it.width
@@ -67,7 +67,7 @@ fun AppCompatActivity.replaceToolbarLayout(toolbar: Toolbar, viewTitleHelp: View
                 centerLeftTitle.setTextColor(it.textColor)
 
                 (centerLeftTitle.layoutParams as? RelativeLayout.LayoutParams?)
-                    ?.setMargins(it.margin.left, it.margin.top, it.margin.right, it.margin.bottom)
+                        ?.setMargins(it.margin.left, it.margin.top, it.margin.right, it.margin.bottom)
             }
             it.titleIcon?.let {
                 centerLeftTitle.layoutParams.width = it.width
@@ -87,7 +87,7 @@ fun AppCompatActivity.replaceToolbarLayout(toolbar: Toolbar, viewTitleHelp: View
                 subTitle.setTextColor(it.textColor)
 
                 (subTitle.layoutParams as? RelativeLayout.LayoutParams?)
-                    ?.setMargins(it.margin.left, it.margin.top, it.margin.right, it.margin.bottom)
+                        ?.setMargins(it.margin.left, it.margin.top, it.margin.right, it.margin.bottom)
             }
             it.titleIcon?.let {
                 subTitle.layoutParams.width = it.width
@@ -106,7 +106,7 @@ fun AppCompatActivity.replaceToolbarLayout(toolbar: Toolbar, viewTitleHelp: View
                 centerTitle.setTextColor(it.textColor)
 
                 (centerTitle.layoutParams as? RelativeLayout.LayoutParams?)
-                    ?.setMargins(it.margin.left, it.margin.top, it.margin.right, it.margin.bottom)
+                        ?.setMargins(it.margin.left, it.margin.top, it.margin.right, it.margin.bottom)
             }
             it.titleIcon?.let {
                 centerTitle.layoutParams.width = it.width
@@ -125,7 +125,7 @@ fun AppCompatActivity.replaceToolbarLayout(toolbar: Toolbar, viewTitleHelp: View
                 rightTitle.setTextColor(it.textColor)
 
                 (rightTitle.layoutParams as? RelativeLayout.LayoutParams?)
-                    ?.setMargins(it.margin.left, it.margin.top, it.margin.right, it.margin.bottom)
+                        ?.setMargins(it.margin.left, it.margin.top, it.margin.right, it.margin.bottom)
             }
             it.titleIcon?.let {
                 rightTitle.layoutParams.width = it.width

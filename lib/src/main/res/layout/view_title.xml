@@ -14,6 +14,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
             android:maxLines="1" />
 
     </RelativeLayout>
@@ -24,8 +25,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_toLeftOf="@+id/rlRightArea"
-        android:layout_toRightOf="@+id/rlLeftArea"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -33,7 +32,8 @@
             android:id="@+id/centerLeftTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxLines="1" />
+            android:maxLines="1"
+            android:visibility="gone" />
 
 
         <LinearLayout
@@ -45,7 +45,8 @@
                 android:id="@+id/subTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/centerTitle"
