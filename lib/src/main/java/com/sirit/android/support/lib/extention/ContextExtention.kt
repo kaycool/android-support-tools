@@ -22,6 +22,7 @@ import android.provider.MediaStore
 import android.support.v4.content.FileProvider
 import com.sirit.android.support.lib.BuildConfig
 import com.sirit.android.support.lib.R
+import com.sirit.android.support.lib.constant.PROJECT_CONFIG_FILE
 import java.io.*
 import java.util.*
 
@@ -332,6 +333,90 @@ private fun getPathFromInputStreamUri(ctx: Context, uri: Uri): String? {
     }
 
     return filePath
+}
+
+
+/**============================================SharedPreferences==============================================**/
+fun Context.putString(key: String, value: String) {
+    val sharedPreferences = getSharedPreferences(PROJECT_CONFIG_FILE, Context.MODE_PRIVATE)
+    val editor = sharedPreferences.edit()
+    editor.putString(key, value)
+    editor.apply()
+}
+
+fun Context.putBoolean(key: String, value: Boolean?) {
+    val sharedPreferences = getSharedPreferences(PROJECT_CONFIG_FILE, Context.MODE_PRIVATE)
+    val editor = sharedPreferences.edit()
+    editor.putBoolean(key, value!!)
+    editor.apply()
+}
+
+fun Context.putInt(key: String, value: Int?) {
+    val sharedPreferences = getSharedPreferences(PROJECT_CONFIG_FILE, Context.MODE_PRIVATE)
+    val editor = sharedPreferences.edit()
+    editor.putInt(key, value!!)
+    editor.apply()
+}
+
+fun Context.putLong(key: String, value: Long?) {
+    val sharedPreferences = getSharedPreferences(PROJECT_CONFIG_FILE, Context.MODE_PRIVATE)
+    val editor = sharedPreferences.edit()
+    editor.putLong(key, value!!)
+    editor.apply()
+}
+
+fun Context.putFloat(key: String, value: Float?) {
+    val sharedPreferences = getSharedPreferences(PROJECT_CONFIG_FILE, Context.MODE_PRIVATE)
+    val editor = sharedPreferences.edit()
+    editor.putFloat(key, value!!)
+    editor.apply()
+}
+
+fun Context.getString(key: String, defaultValue: String): String {
+    val sharedPreferences = getSharedPreferences(PROJECT_CONFIG_FILE, Context.MODE_PRIVATE)
+    return sharedPreferences.getString(key, defaultValue) ?: ""
+}
+
+fun Context.getBoolean(key: String, defaultValue: Boolean?): Boolean {
+    val sharedPreferences = getSharedPreferences(PROJECT_CONFIG_FILE, Context.MODE_PRIVATE)
+    return sharedPreferences.getBoolean(key, defaultValue!!)
+}
+
+fun Context.getInteger(key: String, defaultValue: Int?): Int? {
+    val sharedPreferences = getSharedPreferences(PROJECT_CONFIG_FILE, Context.MODE_PRIVATE)
+    return sharedPreferences.getInt(key, defaultValue!!)
+}
+
+fun Context.getLong(key: String, defaultValue: Long?): Long? {
+    val sharedPreferences = getSharedPreferences(PROJECT_CONFIG_FILE, Context.MODE_PRIVATE)
+    return sharedPreferences.getLong(key, defaultValue!!)
+}
+
+fun Context.getFloat(key: String, defaultValue: Float?): Float? {
+    val sharedPreferences = getSharedPreferences(PROJECT_CONFIG_FILE, Context.MODE_PRIVATE)
+    return sharedPreferences.getFloat(key, defaultValue!!)
+}
+
+fun Context.putAll(map: Map<String, *>) {
+    val sharedPreferences = getSharedPreferences(PROJECT_CONFIG_FILE, Context.MODE_PRIVATE)
+    val editor = sharedPreferences.edit()
+    for (key in map.keys) {
+        val value = map[key]
+        when (value) {
+            is String -> editor.putString(key, value)
+            is Long -> editor.putLong(key, value)
+            is Int -> editor.putInt(key, value)
+            is Boolean -> editor.putBoolean(key, value)
+            is Float -> editor.putFloat(key, value)
+            else -> editor.putString(key, value.toString())
+        }
+    }
+    editor.apply()
+}
+
+fun Context.clearContextSP() {
+    val sharedPreferences = getSharedPreferences(PROJECT_CONFIG_FILE, Context.MODE_PRIVATE)
+    sharedPreferences.edit().clear().apply()
 }
 
 
