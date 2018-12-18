@@ -67,11 +67,11 @@ object RetrofitUtils {
         return mRetrofit
     }
 
-    fun getRetrofit(baseUrl: String, interceptor: () -> Interceptor): Retrofit {
+    fun getRetrofit(baseUrl: String, headerInterceptor: Interceptor): Retrofit {
         if (!this::mRetrofit.isInitialized || baseUrl != mRetrofit.baseUrl().toString()) {
             val builder = OkHttpClient.Builder()
                 .readTimeout(DEFAULT_TIMEOUT.toLong(), TimeUnit.SECONDS)
-                .addInterceptor(interceptor())//拦截器处理通用Header
+                .addInterceptor(headerInterceptor)//拦截器处理通用Header
                 .addInterceptor(loggingInterceptor) //日志处理
                 .connectTimeout(DEFAULT_TIMEOUT.toLong(), TimeUnit.SECONDS)
                 .writeTimeout(DEFAULT_TIMEOUT.toLong(), TimeUnit.SECONDS)
