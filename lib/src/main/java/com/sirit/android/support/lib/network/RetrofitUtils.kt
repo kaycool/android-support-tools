@@ -24,13 +24,13 @@ object RetrofitUtils {
         //            String token = UserDao.getToken();
 
         val newRequest = request.newBuilder()
-                .addHeader("AC-X-TYPE", "1")
-                //                    .addHeader("AC-X-TOKEN", token)
-                //                    .addHeader("AC-X-VERSION", PackageUtil.getVersionName())
-                .addHeader("Accept", "application/json")
-                .removeHeader("User-Agent")
-                //                    .addHeader("User-Agent", "azoyaclub_android_" + PackageUtil.getVersionName())
-                .build()
+            .addHeader("AC-X-TYPE", "1")
+            //                    .addHeader("AC-X-TOKEN", token)
+            //                    .addHeader("AC-X-VERSION", PackageUtil.getVersionName())
+            .addHeader("Accept", "application/json")
+            .removeHeader("User-Agent")
+            //                    .addHeader("User-Agent", "azoyaclub_android_" + PackageUtil.getVersionName())
+            .build()
 
         chain.proceed(newRequest)
     }
@@ -39,11 +39,11 @@ object RetrofitUtils {
     fun getRetrofit(baseUrl: String): Retrofit {
         if (!this::mRetrofit.isInitialized || baseUrl != mRetrofit.baseUrl().toString()) {
             val builder = OkHttpClient.Builder()
-                    .readTimeout(DEFAULT_TIMEOUT.toLong(), TimeUnit.SECONDS)
+                .readTimeout(DEFAULT_TIMEOUT.toLong(), TimeUnit.SECONDS)
 //                    .addInterceptor(interceptor)//拦截器处理通用Header
-                    .addInterceptor(loggingInterceptor) //日志处理
-                    .connectTimeout(DEFAULT_TIMEOUT.toLong(), TimeUnit.SECONDS)
-                    .writeTimeout(DEFAULT_TIMEOUT.toLong(), TimeUnit.SECONDS)
+                .addInterceptor(loggingInterceptor) //日志处理
+                .connectTimeout(DEFAULT_TIMEOUT.toLong(), TimeUnit.SECONDS)
+                .writeTimeout(DEFAULT_TIMEOUT.toLong(), TimeUnit.SECONDS)
 
 //            if (!baseUrl.isEmpty() && baseUrl.toLowerCase().contains("https:")) {
 //                try {
@@ -58,14 +58,46 @@ object RetrofitUtils {
             val client = builder.build()
 
             mRetrofit = Retrofit.Builder()
-                    .client(client)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .baseUrl(baseUrl)
-                    .build()
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .baseUrl(baseUrl)
+                .build()
         }
         return mRetrofit
     }
+
+    fun getRetrofit(baseUrl: String, interceptor: () -> Interceptor): Retrofit {
+        if (!this::mRetrofit.isInitialized || baseUrl != mRetrofit.baseUrl().toString()) {
+            val builder = OkHttpClient.Builder()
+                .readTimeout(DEFAULT_TIMEOUT.toLong(), TimeUnit.SECONDS)
+                .addInterceptor(interceptor())//拦截器处理通用Header
+                .addInterceptor(loggingInterceptor) //日志处理
+                .connectTimeout(DEFAULT_TIMEOUT.toLong(), TimeUnit.SECONDS)
+                .writeTimeout(DEFAULT_TIMEOUT.toLong(), TimeUnit.SECONDS)
+
+//            if (!baseUrl.isEmpty() && baseUrl.toLowerCase().contains("https:")) {
+//                try {
+//                    builder.sslSocketFactory(getSSLSocketFactory(intArrayOf(R.raw.azoyaclub)))
+//                    builder.hostnameVerifier(HtcHostnameVerifier(arrayOf<String>(BASE_URL_HOST)))
+//                } catch (e: Exception) {
+//                    e.printStackTrace()
+//                    Log.e(TAG, e.message)
+//                }
+//            }
+
+            val client = builder.build()
+
+            mRetrofit = Retrofit.Builder()
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .baseUrl(baseUrl)
+                .build()
+        }
+        return mRetrofit
+    }
+
 
 //    @Throws(Exception::class)
 //    private fun getSSLSocketFactory(certificates: IntArray): SSLSocketFactory {
