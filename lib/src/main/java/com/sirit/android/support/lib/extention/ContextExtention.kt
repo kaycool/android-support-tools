@@ -20,6 +20,7 @@ import android.provider.Contacts
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.support.v4.content.FileProvider
+import android.widget.Toast
 import com.sirit.android.support.lib.BuildConfig
 import com.sirit.android.support.lib.R
 import com.sirit.android.support.lib.constant.PROJECT_CONFIG_FILE
@@ -335,6 +336,27 @@ private fun getPathFromInputStreamUri(ctx: Context, uri: Uri): String? {
     return filePath
 }
 
+/**============================================Toast==============================================**/
+fun Context.showToast(text: String) {
+    showToast(text, 81, 0)
+}
+
+fun Context.showToast(rsid: Int) {
+    showToast(rsid, 81, 0)
+}
+
+fun Context.showToast(rsid: Int, gravity: Int, duration: Int) {
+    showToast(this.string(rsid), gravity, 0, 0, duration)
+}
+
+fun Context.showToast(text: String, gravity: Int, duration: Int) {
+    showToast(text, gravity, 0, 0, duration)
+}
+
+fun Context.showToast(text: String, gravity: Int, xOffset: Int, yOffset: Int, duration: Int) {
+    val toast = Toast.makeText(this, text, duration)
+    toast.show()
+}
 
 /**============================================SharedPreferences==============================================**/
 fun Context.putString(key: String, value: String) {
