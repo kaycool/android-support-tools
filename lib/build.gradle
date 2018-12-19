@@ -60,4 +60,6 @@ dependencies {
     api 'com.joooonho:selectableroundedimageview:1.0.1'
     //图片浏览
     api 'com.github.chrisbanes:PhotoView:2.0.0'
+
+    implementation 'com.gyf.barlibrary:barlibrary:2.3.0'
 }
