@@ -39,6 +39,7 @@ fun <T> applyFlowSchedulers(): FlowableTransformer<T, T> {
     return io2MainFlowable()
 }
 
+
 //fun unsubscribe(subscriber: Subscriber<*>?) {
 //    if (null != subscriber && !subscriber.isUnsubscribed) {
 //        subscriber.unsubscribe()
