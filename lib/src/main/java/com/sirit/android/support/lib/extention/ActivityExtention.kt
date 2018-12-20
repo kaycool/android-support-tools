@@ -7,16 +7,12 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.util.TypedValue
 import android.view.View
-import android.view.Window
 import android.view.WindowManager
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.gyf.barlibrary.ImmersionBar
 import com.sirit.android.support.lib.R
 import com.sirit.android.support.lib.widget.help.ViewTitleHelp
-import java.lang.reflect.Array.setInt
-import java.lang.reflect.AccessibleObject.setAccessible
-import com.sun.xml.internal.ws.streaming.XMLStreamReaderUtil.getAttributes
 
 
 /**
