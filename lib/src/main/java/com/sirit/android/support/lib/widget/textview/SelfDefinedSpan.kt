@@ -15,7 +15,7 @@ import android.text.style.ReplacementSpan
 
 class ImageCenterSpan(drawable: Drawable, verticalAlignment: Int) : ImageSpan(drawable, verticalAlignment) {
 
-    override fun draw(canvas: Canvas, text: CharSequence?, start: Int, end: Int, x: Float, top: Int, y: Int, bottom: Int, paint: Paint) {
+    override fun draw(canvas: Canvas?, text: CharSequence?, start: Int, end: Int, x: Float, top: Int, y: Int, bottom: Int, paint: Paint) {
         val drawable = drawable
         val fontMetricsInt = paint?.fontMetricsInt
         val transY = (y + fontMetricsInt!!.descent + y + fontMetricsInt.ascent) / 2 - drawable.bounds.bottom / 2
