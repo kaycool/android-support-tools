@@ -1,6 +1,5 @@
 package com.sirit.android.support.lib.widget.dialog
 
-import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.graphics.drawable.ColorDrawable
@@ -30,7 +29,6 @@ class BottomDialog:BaseDialog {
 //         window?.setWindowAnimations(R.style.anim_dialog);
         window?.setBackgroundDrawable(ColorDrawable(0))
         window?.setDimAmount(0f)
-        window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
         setCancelable(true)
 
         setContentView(R.layout.dialog_bottom_sheet)
