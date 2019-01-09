@@ -3,7 +3,9 @@ package com.sirit.android.support.lib.extention
 import io.reactivex.FlowableTransformer
 import io.reactivex.ObservableTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import org.reactivestreams.Subscriber
 
 
 /**
@@ -19,7 +21,7 @@ import io.reactivex.schedulers.Schedulers
 fun <T> ioMain(): ObservableTransformer<T, T> {
     return ObservableTransformer { upstream ->
         upstream.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(AndroidSchedulers.mainThread())
     }
 }
 
@@ -40,8 +42,10 @@ fun <T> applyFlowSchedulers(): FlowableTransformer<T, T> {
 }
 
 
-//fun unsubscribe(subscriber: Subscriber<*>?) {
-//    if (null != subscriber && !subscriber.isUnsubscribed) {
-//        subscriber.unsubscribe()
-//    }
-//}
+fun unsubscribe(disposable: Disposable?) {
+    disposable?.also {
+        if (!it.isDisposed) {
+            it.dispose()
+        }
+    }
+}

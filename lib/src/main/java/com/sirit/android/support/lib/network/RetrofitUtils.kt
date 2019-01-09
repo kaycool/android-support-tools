@@ -35,6 +35,7 @@ object RetrofitUtils {
         chain.proceed(newRequest)
     }
     private val loggingInterceptor = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger { message -> Log.d(TAG, message) }).setLevel(HttpLoggingInterceptor.Level.BODY)
+    var curlInterceptor = OkCurl("cURL String =")
 
     fun getRetrofit(baseUrl: String): Retrofit {
         if (!this::mRetrofit.isInitialized || baseUrl != mRetrofit.baseUrl().toString()) {
@@ -42,6 +43,7 @@ object RetrofitUtils {
                 .readTimeout(DEFAULT_TIMEOUT.toLong(), TimeUnit.SECONDS)
 //                    .addInterceptor(interceptor)//拦截器处理通用Header
                 .addInterceptor(loggingInterceptor) //日志处理
+                .addInterceptor(curlInterceptor) //curl
                 .connectTimeout(DEFAULT_TIMEOUT.toLong(), TimeUnit.SECONDS)
                 .writeTimeout(DEFAULT_TIMEOUT.toLong(), TimeUnit.SECONDS)
 
@@ -73,6 +75,7 @@ object RetrofitUtils {
                 .readTimeout(DEFAULT_TIMEOUT.toLong(), TimeUnit.SECONDS)
                 .addInterceptor(headerInterceptor)//拦截器处理通用Header
                 .addInterceptor(loggingInterceptor) //日志处理
+                .addInterceptor(curlInterceptor) //curl
                 .connectTimeout(DEFAULT_TIMEOUT.toLong(), TimeUnit.SECONDS)
                 .writeTimeout(DEFAULT_TIMEOUT.toLong(), TimeUnit.SECONDS)
 
