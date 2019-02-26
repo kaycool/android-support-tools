@@ -7,7 +7,12 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.security.SecureRandom
+import java.security.cert.CertificateException
+import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
+import javax.net.ssl.*
+
 
 object RetrofitUtils {
 
@@ -47,15 +52,17 @@ object RetrofitUtils {
                 .connectTimeout(DEFAULT_TIMEOUT.toLong(), TimeUnit.SECONDS)
                 .writeTimeout(DEFAULT_TIMEOUT.toLong(), TimeUnit.SECONDS)
 
-//            if (!baseUrl.isEmpty() && baseUrl.toLowerCase().contains("https:")) {
-//                try {
-//                    builder.sslSocketFactory(getSSLSocketFactory(intArrayOf(R.raw.azoyaclub)))
-//                    builder.hostnameVerifier(HtcHostnameVerifier(arrayOf<String>(BASE_URL_HOST)))
-//                } catch (e: Exception) {
-//                    e.printStackTrace()
-//                    Log.e(TAG, e.message)
-//                }
-//            }
+            if (!baseUrl.isEmpty() && baseUrl.toLowerCase().contains("https:")) {
+                try {
+                    createSSLSocketFactory()?.also {
+                        builder.sslSocketFactory(it)
+                        builder.hostnameVerifier(TrustAllHostnameVerifier())
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    Log.e(TAG, e.message)
+                }
+            }
 
             val client = builder.build()
 
@@ -79,15 +86,17 @@ object RetrofitUtils {
                 .connectTimeout(DEFAULT_TIMEOUT.toLong(), TimeUnit.SECONDS)
                 .writeTimeout(DEFAULT_TIMEOUT.toLong(), TimeUnit.SECONDS)
 
-//            if (!baseUrl.isEmpty() && baseUrl.toLowerCase().contains("https:")) {
-//                try {
-//                    builder.sslSocketFactory(getSSLSocketFactory(intArrayOf(R.raw.azoyaclub)))
-//                    builder.hostnameVerifier(HtcHostnameVerifier(arrayOf<String>(BASE_URL_HOST)))
-//                } catch (e: Exception) {
-//                    e.printStackTrace()
-//                    Log.e(TAG, e.message)
-//                }
-//            }
+            if (!baseUrl.isEmpty() && baseUrl.toLowerCase().contains("https:")) {
+                try {
+                    createSSLSocketFactory()?.also {
+                        builder.sslSocketFactory(it)
+                        builder.hostnameVerifier(TrustAllHostnameVerifier())
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    Log.e(TAG, e.message)
+                }
+            }
 
             val client = builder.build()
 
@@ -101,23 +110,45 @@ object RetrofitUtils {
         return mRetrofit
     }
 
+    private fun  createSSLSocketFactory():SSLSocketFactory? {
+        var ssfFactory:SSLSocketFactory ?= null;
 
-//    @Throws(Exception::class)
-//    private fun getSSLSocketFactory(certificates: IntArray): SSLSocketFactory {
-//        val certificateFactory = CertificateFactory.getInstance("X.509")
-//        val keyStore = KeyStore.getInstance(KeyStore.getDefaultType())
-//        keyStore.load(null, null)
-//
-//        for (i in certificates.indices) {
-//            val certificate = HtcApplication.getInstance().getResources().openRawResource(certificates[i])
-//            keyStore.setCertificateEntry(i.toString(), certificateFactory.generateCertificate(certificate))
-//            IoUtils.closeStream(certificate)
-//        }
-//        val sslContext = SSLContext.getInstance("TLS")
-//        val trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm())
-//        trustManagerFactory.init(keyStore)
-//        sslContext.init(null, trustManagerFactory.trustManagers, SecureRandom())
-//        return sslContext.socketFactory
-//    }
+        try {
+            val sc = SSLContext.getInstance("TLS");
+            sc.init(
+                null,
+                arrayOf(TrustAllCerts()),
+                SecureRandom()
+            )
+            ssfFactory = sc.socketFactory
+        } catch ( e:Exception) {
+        }
+
+        return ssfFactory
+  }
+
+  private class TrustAllCerts : X509TrustManager {
+
+      @Throws(CertificateException::class)
+      override fun checkClientTrusted(chain: Array<out X509Certificate>?, authType: String?) {
+
+      }
+
+      @Throws(CertificateException::class)
+      override fun checkServerTrusted(chain: Array<out X509Certificate>?, authType: String?) {
+      }
+
+      override fun getAcceptedIssuers(): Array<X509Certificate> {
+          return   arrayOf()
+      }
+  }
+
+  //信任所有的服务器,返回true
+  private class TrustAllHostnameVerifier : HostnameVerifier {
+      override fun verify(hostname: String?, session: SSLSession?): Boolean {
+          return true
+      }
+  }
+
 
 }
