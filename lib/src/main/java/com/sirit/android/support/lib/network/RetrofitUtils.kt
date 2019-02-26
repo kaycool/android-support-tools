@@ -114,7 +114,7 @@ object RetrofitUtils {
         var ssfFactory:SSLSocketFactory ?= null;
 
         try {
-            val sc = SSLContext.getInstance("TLS");
+            val sc = SSLContext.getInstance("TLS")
             sc.init(
                 null,
                 arrayOf(TrustAllCerts()),
