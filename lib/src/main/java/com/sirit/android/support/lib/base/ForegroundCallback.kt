@@ -1,4 +1,4 @@
-package com.sirit.android.support.lib
+package com.sirit.android.support.lib.base
 
 import android.app.Activity
 import android.app.Application
