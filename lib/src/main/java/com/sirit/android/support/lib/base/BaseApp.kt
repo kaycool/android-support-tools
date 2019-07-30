@@ -3,7 +3,6 @@ package com.sirit.android.support.lib.base
 import android.app.Application
 import android.content.Context
 import androidx.multidex.MultiDex
-import com.sirit.android.support.lib.ForegroundCallback
 
 /**
  * @author kai.w
