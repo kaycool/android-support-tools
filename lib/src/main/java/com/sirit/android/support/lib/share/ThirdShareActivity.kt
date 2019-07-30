@@ -1,6 +1,6 @@
 package com.sirit.android.support.lib.share
 
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 
 /**
  * @author kai.w

@@ -4,18 +4,18 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
-import android.support.v7.widget.StaggeredGridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.GridLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 
 
 /**
  * @author kai.w
  * @des  $des
  */
-class SpaceDecoration(private val mSpaceHorizontal: Int, private val mSpaceVertical: Int, mColor: Int = Color.TRANSPARENT) : RecyclerView.ItemDecoration() {
+class SpaceDecoration(private val mSpaceHorizontal: Int, private val mSpaceVertical: Int, mColor: Int = Color.TRANSPARENT) : androidx.recyclerview.widget.RecyclerView.ItemDecoration() {
     private val mPaint by lazy { Paint() }
 
 
@@ -25,28 +25,28 @@ class SpaceDecoration(private val mSpaceHorizontal: Int, private val mSpaceVerti
         mPaint.color = mColor
     }
 
-    override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
+    override fun onDrawOver(c: Canvas, parent: androidx.recyclerview.widget.RecyclerView, state: androidx.recyclerview.widget.RecyclerView.State) {
         super.onDrawOver(c, parent, state)
         val layoutManager = parent.layoutManager
         when (layoutManager) {
-            is GridLayoutManager -> drawGridItemSpace(c, parent, layoutManager)
-            is LinearLayoutManager -> drawLinearItemSpace(c, parent, layoutManager)
-            is StaggeredGridLayoutManager -> drawStaggeredItemSpace(c, parent, layoutManager)
+            is androidx.recyclerview.widget.GridLayoutManager -> drawGridItemSpace(c, parent, layoutManager)
+            is androidx.recyclerview.widget.LinearLayoutManager -> drawLinearItemSpace(c, parent, layoutManager)
+            is androidx.recyclerview.widget.StaggeredGridLayoutManager -> drawStaggeredItemSpace(c, parent, layoutManager)
         }
     }
 
-    override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
+    override fun onDraw(c: Canvas, parent: androidx.recyclerview.widget.RecyclerView, state: androidx.recyclerview.widget.RecyclerView.State) {
         super.onDraw(c, parent, state)
     }
 
 
-    private fun drawLinearItemSpace(c: Canvas, parent: RecyclerView, linearManager: LinearLayoutManager) {
+    private fun drawLinearItemSpace(c: Canvas, parent: androidx.recyclerview.widget.RecyclerView, linearManager: androidx.recyclerview.widget.LinearLayoutManager) {
 
-        if (linearManager.orientation == LinearLayoutManager.VERTICAL) {
+        if (linearManager.orientation == androidx.recyclerview.widget.LinearLayoutManager.VERTICAL) {
             for (viewPosition in 0 until linearManager.itemCount) {
                 val childView = parent.getChildAt(viewPosition) ?: continue
 
-                val params = childView.layoutParams as RecyclerView.LayoutParams
+                val params = childView.layoutParams as androidx.recyclerview.widget.RecyclerView.LayoutParams
 
                 val left: Int
                 var top: Int
@@ -67,7 +67,7 @@ class SpaceDecoration(private val mSpaceHorizontal: Int, private val mSpaceVerti
             for (viewPosition in 0 until linearManager.itemCount) {
                 val childView = parent.getChildAt(viewPosition) ?: continue
 
-                val params = childView.layoutParams as RecyclerView.LayoutParams
+                val params = childView.layoutParams as androidx.recyclerview.widget.RecyclerView.LayoutParams
 
                 var left: Int
                 var top: Int
@@ -93,11 +93,11 @@ class SpaceDecoration(private val mSpaceHorizontal: Int, private val mSpaceVerti
     }
 
 
-    private fun drawGridItemSpace(c: Canvas, parent: RecyclerView, gridManager: GridLayoutManager) {
+    private fun drawGridItemSpace(c: Canvas, parent: androidx.recyclerview.widget.RecyclerView, gridManager: androidx.recyclerview.widget.GridLayoutManager) {
         for (viewPosition in 0 until gridManager.itemCount) {
             val childView = parent.getChildAt(viewPosition) ?: continue
 
-            val params = childView.layoutParams as RecyclerView.LayoutParams
+            val params = childView.layoutParams as androidx.recyclerview.widget.RecyclerView.LayoutParams
 
             val spanCount = gridManager.spanCount
             val index = viewPosition % spanCount
@@ -155,25 +155,25 @@ class SpaceDecoration(private val mSpaceHorizontal: Int, private val mSpaceVerti
         }
     }
 
-    private fun drawStaggeredItemSpace(c: Canvas, parent: RecyclerView, gridManager: StaggeredGridLayoutManager) {
+    private fun drawStaggeredItemSpace(c: Canvas, parent: androidx.recyclerview.widget.RecyclerView, gridManager: androidx.recyclerview.widget.StaggeredGridLayoutManager) {
 
     }
 
 
-    override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+    override fun getItemOffsets(outRect: Rect, view: View, parent: androidx.recyclerview.widget.RecyclerView, state: androidx.recyclerview.widget.RecyclerView.State) {
         super.getItemOffsets(outRect, view, parent, state)
         val layoutManager = parent.layoutManager
         when (layoutManager) {
-            is GridLayoutManager -> layoutGridItem(outRect, view, parent, layoutManager)
-            is LinearLayoutManager -> layoutLinearItem(outRect, view, parent, layoutManager)
-            is StaggeredGridLayoutManager -> layoutStaggeredItem(outRect, view, parent, layoutManager)
+            is androidx.recyclerview.widget.GridLayoutManager -> layoutGridItem(outRect, view, parent, layoutManager)
+            is androidx.recyclerview.widget.LinearLayoutManager -> layoutLinearItem(outRect, view, parent, layoutManager)
+            is androidx.recyclerview.widget.StaggeredGridLayoutManager -> layoutStaggeredItem(outRect, view, parent, layoutManager)
         }
     }
 
-    private fun layoutLinearItem(outRect: Rect, view: View, parent: RecyclerView, linearManager: LinearLayoutManager) {
+    private fun layoutLinearItem(outRect: Rect, view: View, parent: androidx.recyclerview.widget.RecyclerView, linearManager: androidx.recyclerview.widget.LinearLayoutManager) {
         val viewPosition = parent.getChildAdapterPosition(view)
 
-        if (linearManager.orientation == LinearLayoutManager.VERTICAL) {
+        if (linearManager.orientation == androidx.recyclerview.widget.LinearLayoutManager.VERTICAL) {
             outRect.left = mSpaceHorizontal
             outRect.right = mSpaceHorizontal
             when (viewPosition) {
@@ -212,7 +212,7 @@ class SpaceDecoration(private val mSpaceHorizontal: Int, private val mSpaceVerti
     }
 
 
-    private fun layoutGridItem(outRect: Rect, view: View, parent: RecyclerView, gridManager: GridLayoutManager) {
+    private fun layoutGridItem(outRect: Rect, view: View, parent: androidx.recyclerview.widget.RecyclerView, gridManager: androidx.recyclerview.widget.GridLayoutManager) {
         val viewPosition = parent.getChildAdapterPosition(view)
         val spanCount = gridManager.spanCount
         val index = viewPosition % spanCount
@@ -252,7 +252,7 @@ class SpaceDecoration(private val mSpaceHorizontal: Int, private val mSpaceVerti
         }
     }
 
-    private fun layoutStaggeredItem(outRect: Rect, view: View, parent: RecyclerView, staggeredManager: StaggeredGridLayoutManager) {
+    private fun layoutStaggeredItem(outRect: Rect, view: View, parent: androidx.recyclerview.widget.RecyclerView, staggeredManager: androidx.recyclerview.widget.StaggeredGridLayoutManager) {
 
     }
 }

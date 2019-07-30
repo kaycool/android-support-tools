@@ -1,6 +1,6 @@
 package com.sirit.android.support.lib.widget.recycle
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 
@@ -8,7 +8,7 @@ import android.view.ViewGroup
  * @author kai.w
  * @des  $des
  */
-class WrapAdapter<T>(val list: MutableList<T>, val adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class WrapAdapter<T>(val list: MutableList<T>, val adapter: androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>) : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
     private var mHeaderView: View? = null
     private var mFooterView: View? = null
     private var mSpaceView: View? = null
@@ -34,7 +34,7 @@ class WrapAdapter<T>(val list: MutableList<T>, val adapter: RecyclerView.Adapter
         }
     }
 
-    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
 
         return when (p1) {
 //            ITEM_HEADER_TYPE -> {
@@ -65,7 +65,7 @@ class WrapAdapter<T>(val list: MutableList<T>, val adapter: RecyclerView.Adapter
         return itemCount
     }
 
-    override fun onBindViewHolder(p0: RecyclerView.ViewHolder, p1: Int) {
+    override fun onBindViewHolder(p0: androidx.recyclerview.widget.RecyclerView.ViewHolder, p1: Int) {
         when (p1) {
             ITEM_HEADER_TYPE -> {
             }

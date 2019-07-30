@@ -2,8 +2,8 @@ package com.sirit.android.support.lib.widget.editor
 
 import android.content.Context
 import android.graphics.BitmapFactory
-import android.support.v7.widget.AppCompatEditText
-import android.support.v7.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatEditText
+import androidx.appcompat.widget.AppCompatImageView
 import android.util.AttributeSet
 import android.view.View
 import android.widget.EditText

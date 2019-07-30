@@ -3,7 +3,7 @@ package com.sirit.android.support.login.demo
 import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -62,4 +62,7 @@ abstract class ThirdLoginActivity : AppCompatActivity(), FacebookCallback<LoginR
     protected fun toFbLogin() {
         LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"))
     }
+
+
+
 }

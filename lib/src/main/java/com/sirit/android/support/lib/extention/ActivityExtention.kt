@@ -3,8 +3,8 @@ package com.sirit.android.support.lib.extention
 import android.app.Activity
 import android.graphics.Color
 import android.os.Build
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import android.util.TypedValue
 import android.view.View
 import android.view.WindowManager

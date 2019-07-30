@@ -3,7 +3,7 @@ package com.sirit.android.support.lib.widget
 import android.content.Context
 import android.view.View.MeasureSpec
 import android.content.res.TypedArray
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.util.AttributeSet
 import com.sirit.android.support.lib.R
 
@@ -12,7 +12,7 @@ import com.sirit.android.support.lib.R
  * @author kai.w
  * @des  $des
  */
-class MaxHeightRecyclerView : RecyclerView {
+class MaxHeightRecyclerView : androidx.recyclerview.widget.RecyclerView {
     private var mMaxHeight: Int = 0
 
     constructor(context: Context) : super(context) {}

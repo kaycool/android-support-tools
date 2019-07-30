@@ -4,9 +4,9 @@ import android.graphics.Canvas
 import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import com.sirit.android.support.lib.R
 import com.sirit.android.support.lib.extention.dp2px
@@ -16,7 +16,7 @@ import com.sirit.android.support.lib.extention.dp2px
  * @des  $des
  */
 class GalleryActivity : AppCompatActivity(), MediaScanCallback {
-    private val mRvGallery by lazy { findViewById<RecyclerView>(R.id.rvGallery) }
+    private val mRvGallery by lazy { findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.rvGallery) }
     private val mGalleryAdapter by lazy { GalleryAdapter(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,23 +28,23 @@ class GalleryActivity : AppCompatActivity(), MediaScanCallback {
         }
 
         mRvGallery.apply {
-            this.layoutManager = GridLayoutManager(this@GalleryActivity, 2)
+            this.layoutManager = androidx.recyclerview.widget.GridLayoutManager(this@GalleryActivity, 2)
             this.adapter = mGalleryAdapter
 
-            this.addItemDecoration(object : RecyclerView.ItemDecoration() {
+            this.addItemDecoration(object : androidx.recyclerview.widget.RecyclerView.ItemDecoration() {
 
-                override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
+                override fun onDrawOver(c: Canvas, parent: androidx.recyclerview.widget.RecyclerView, state: androidx.recyclerview.widget.RecyclerView.State) {
                     super.onDrawOver(c, parent, state)
                 }
 
-                override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
+                override fun onDraw(c: Canvas, parent: androidx.recyclerview.widget.RecyclerView, state: androidx.recyclerview.widget.RecyclerView.State) {
                     super.onDraw(c, parent, state)
                 }
 
-                override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+                override fun getItemOffsets(outRect: Rect, view: View, parent: androidx.recyclerview.widget.RecyclerView, state: androidx.recyclerview.widget.RecyclerView.State) {
                     super.getItemOffsets(outRect, view, parent, state)
 
-                    val layoutmanager = (parent.layoutManager as GridLayoutManager)
+                    val layoutmanager = (parent.layoutManager as androidx.recyclerview.widget.GridLayoutManager)
                     val spanCount: Int = layoutmanager.spanCount
 
                     val viewPosition: Int = layoutmanager.getPosition(view)

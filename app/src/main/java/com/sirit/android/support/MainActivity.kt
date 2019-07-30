@@ -1,6 +1,6 @@
 package com.sirit.android.support
 
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -54,4 +54,7 @@ class MainActivity : AppCompatActivity() {
 ////        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"))
 //
 //    }
+
+
+
 }

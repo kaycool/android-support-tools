@@ -1,7 +1,7 @@
 package com.sirit.android.support.lib.widget.recycle
 
 import android.content.Context
-import android.support.v4.view.NestedScrollingChild
+import androidx.core.view.NestedScrollingChild
 import android.util.AttributeSet
 import android.widget.FrameLayout
 import com.sirit.android.support.lib.widget.recycle.listener.NestedFooterListener

@@ -2,7 +2,7 @@ package com.sirit.android.support.lib.widget.recycle
 
 import android.content.Context
 import android.graphics.Canvas
-import android.support.v4.view.NestedScrollingParent
+import androidx.core.view.NestedScrollingParent
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup

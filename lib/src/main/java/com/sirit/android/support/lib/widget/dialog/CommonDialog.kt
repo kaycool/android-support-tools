@@ -3,7 +3,7 @@ package com.sirit.android.support.lib.widget.dialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.support.v7.widget.DialogTitle
+import androidx.appcompat.widget.DialogTitle
 import com.sirit.android.support.lib.R
 
 /**

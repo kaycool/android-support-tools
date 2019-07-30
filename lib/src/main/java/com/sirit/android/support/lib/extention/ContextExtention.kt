@@ -6,9 +6,9 @@ import android.content.Context
 import android.content.res.Configuration
 import android.graphics.drawable.Drawable
 import android.media.MediaScannerConnection
-import android.support.graphics.drawable.VectorDrawableCompat
-import android.support.v4.content.ContextCompat
-import android.support.v4.content.res.ResourcesCompat
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import android.util.Log
 import android.content.Intent
 import android.database.Cursor
@@ -19,7 +19,7 @@ import android.os.Environment
 import android.provider.Contacts
 import android.provider.DocumentsContract
 import android.provider.MediaStore
-import android.support.v4.content.FileProvider
+import androidx.core.content.FileProvider
 import android.widget.Toast
 import com.sirit.android.support.lib.BuildConfig
 import com.sirit.android.support.lib.R
