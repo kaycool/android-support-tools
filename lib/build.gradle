@@ -81,6 +81,7 @@ dependencies {
 
     //kodein
     api 'org.kodein.di:kodein-di-generic-jvm:6.3.3'
+    api 'org.kodein.di:kodein-di-framework-android-x:6.3.3'
 
     // 如果你引入了 lifecycle:common-java8 并且使用 DefaultLifecycleObserver，
     // 可以不引入 lifecycle:compiler
