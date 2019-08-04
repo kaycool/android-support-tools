@@ -29,7 +29,6 @@ open class BaseApp : Application(), KodeinAware {
     override fun onCreate() {
         super.onCreate()
         instance = this
-        registerActivityLifecycleCallbacks(ForegroundCallback)
     }
 
     override fun attachBaseContext(base: Context?) {
