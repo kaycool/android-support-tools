@@ -36,6 +36,8 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1'
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.0'
     api 'androidx.appcompat:appcompat:1.0.2'
     api 'androidx.legacy:legacy-support-v4:1.0.0'
     api 'androidx.cardview:cardview:1.0.0'
@@ -65,13 +67,18 @@ dependencies {
     api 'jp.wasabeef:glide-transformations:3.3.0'
     api 'com.joooonho:selectableroundedimageview:1.0.1'
     api 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
-    api 'com.github.piasy:BigImageViewer:1.5.7'
+    api('com.github.piasy:BigImageViewer:1.5.7') {
+        exclude group: "com.davemorrissey.labs", module: 'subsampling-scale-image-view'
+        transitive = true
+    }
     // load with glide
-    api 'com.github.piasy:GlideImageLoader:1.5.7'
+    api('com.github.piasy:GlideImageLoader:1.5.7') {
+        exclude group: "com.github.bumptech.glide"
+        exclude group: "com.squareup.okhttp3"
+        transitive = true
+    }
     // support thumbnail and gif with Glide
     api 'com.github.piasy:GlideImageViewFactory:1.5.7'
-    //图片浏览
-    api 'com.github.chrisbanes:PhotoView:2.0.0'
 
     //event bus
     api 'org.greenrobot:eventbus:3.1.1'
