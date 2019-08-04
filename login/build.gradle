@@ -27,7 +27,7 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.github.kaycool:StrongSupport:1.0.2'
+    implementation project(path: ':lib')
     api 'com.facebook.android:facebook-login:4.36.0'
     api 'com.facebook.android:facebook-share:4.36.0'
 }
