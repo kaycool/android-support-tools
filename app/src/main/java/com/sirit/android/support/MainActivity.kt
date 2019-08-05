@@ -1,8 +1,25 @@
 package com.sirit.android.support
 
+import android.content.Context
+import android.os.Bundle
+import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
+import com.sirit.android.support.lib.utils.logd
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.closestKodein
+import org.kodein.di.generic.instance
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), KodeinAware {
+    override val kodein by closestKodein()
+
+    private val inflater: LayoutInflater by instance()
+    private val context: Context  by kodein.instance()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        logd("MainActivity", "inflater = $inflater")
+        logd("MainActivity", "context = $context")
+    }
 
 //    private val EMAIL = "email"
 //    private val USER_POSTS = "user_posts"
@@ -54,7 +71,6 @@ class MainActivity : AppCompatActivity() {
 ////        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"))
 //
 //    }
-
 
 
 }
