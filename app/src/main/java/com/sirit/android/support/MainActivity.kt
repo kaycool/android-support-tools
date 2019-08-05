@@ -1,5 +1,6 @@
 package com.sirit.android.support
 
+import android.app.Application
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,11 +16,13 @@ class MainActivity : AppCompatActivity(), KodeinAware {
 
     private val inflater: LayoutInflater by instance()
     private val retrofit: Retrofit by instance()
+    private val netApi: NetApi by instance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         logd("MainActivity", "inflater = $inflater")
         logd("MainActivity", "retrofit = $retrofit")
+        logd("MainActivity", "netApi = $netApi")
     }
 
 //    private val EMAIL = "email"
