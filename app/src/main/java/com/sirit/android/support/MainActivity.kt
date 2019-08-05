@@ -8,17 +8,18 @@ import com.sirit.android.support.lib.utils.logd
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.closestKodein
 import org.kodein.di.generic.instance
+import retrofit2.Retrofit
 
 class MainActivity : AppCompatActivity(), KodeinAware {
     override val kodein by closestKodein()
 
     private val inflater: LayoutInflater by instance()
-    private val context: Context  by kodein.instance()
+    private val retrofit: Retrofit by instance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         logd("MainActivity", "inflater = $inflater")
-        logd("MainActivity", "context = $context")
+        logd("MainActivity", "retrofit = $retrofit")
     }
 
 //    private val EMAIL = "email"
