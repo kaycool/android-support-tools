@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import com.sirit.android.support.lib.utils.logd
+import com.tencent.mmkv.MMKV
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.closestKodein
 import org.kodein.di.generic.instance
@@ -17,12 +18,16 @@ class MainActivity : AppCompatActivity(), KodeinAware {
     private val inflater: LayoutInflater by instance()
     private val retrofit: Retrofit by instance()
     private val netApi: NetApi by instance()
+    private val mmkv: MMKV by instance("MMKV_DEFAULT")
+    private val mmkv_dir: String by instance("mmkv_dir")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         logd("MainActivity", "inflater = $inflater")
         logd("MainActivity", "retrofit = $retrofit")
         logd("MainActivity", "netApi = $netApi")
+        logd("MainActivity", "mmkv = $mmkv")
+        logd("MainActivity", "mmkv_dir = $mmkv_dir")
     }
 
 //    private val EMAIL = "email"

@@ -7,7 +7,9 @@ import org.kodein.di.android.x.androidXModule
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.singleton
+import org.kodein.di.generic.with
 import retrofit2.Retrofit
+import java.io.File
 
 /**
  * @author kai.w

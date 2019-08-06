@@ -9,20 +9,25 @@ import android.widget.FrameLayout
 import com.sirit.android.support.lib.R
 import com.sirit.android.support.lib.extention.mipmapDrawable
 import kotlinx.android.synthetic.main.view_title.view.*
+import org.kodein.di.Kodein
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.closestKodein
+import org.kodein.di.generic.instance
 
 /**
  * @author kai.w
  *      ${DES}
  */
-class TitleLayout : FrameLayout {
+class TitleLayout : FrameLayout, KodeinAware {
+    override val kodein by closestKodein()
+    private val inflater: LayoutInflater by instance()
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-
     init {
-        LayoutInflater.from(context).inflate(R.layout.view_title, this, true)
+        inflater.inflate(R.layout.view_title, this, true)
     }
 
 
