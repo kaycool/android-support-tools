@@ -1,16 +1,16 @@
 package com.sirit.android.support.lib.base
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 
 /**
  * @author kai.w
  * @des  $des
  */
-class BaseFragment: androidx.fragment.app.Fragment() {
+open class BaseFragment : Fragment() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
