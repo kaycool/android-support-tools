@@ -7,10 +7,7 @@ import com.tencent.mmkv.MMKV
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
-import org.kodein.di.generic.bind
-import org.kodein.di.generic.instance
-import org.kodein.di.generic.singleton
-import org.kodein.di.generic.with
+import org.kodein.di.generic.*
 import java.io.File
 
 /**
@@ -20,14 +17,13 @@ import java.io.File
 open class BaseApp : Application(), KodeinAware {
     private val thirdModule = Kodein.Module("api") {
         bind<MMKV>(tag = "MMKV_DEFAULT") with singleton { MMKV.defaultMMKV() }
-        constant(tag = "mmkv_dir") with "${instance<String>(tag = "packageName")}${File.separator}mmkv_dir"
+        constant(tag = "mmkv_dir") with "$packageName${File.separator}mmkv_dir"
     }
     override val kodein by Kodein.lazy {
         /* bindings */
         import(androidXModule(this@BaseApp))
         import(thirdModule)
     }
-
     private val rootDir: String  by instance("mmkv_dir")
 
     override fun onCreate() {
@@ -35,7 +31,7 @@ open class BaseApp : Application(), KodeinAware {
         instance = this
         MMKV.initialize(rootDir)
         val k = kodein
-        println("BaseApp$k,rootDir$rootDir")
+        println("BaseApp$k,rootDir=$rootDir")
     }
 
     override fun attachBaseContext(base: Context?) {
