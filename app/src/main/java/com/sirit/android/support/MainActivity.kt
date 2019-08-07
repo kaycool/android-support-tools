@@ -1,7 +1,5 @@
 package com.sirit.android.support
 
-import android.app.Application
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
@@ -23,11 +21,14 @@ class MainActivity : AppCompatActivity(), KodeinAware {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        logd("MainActivity", "inflater = $inflater")
-        logd("MainActivity", "retrofit = $retrofit")
-        logd("MainActivity", "netApi = $netApi")
-        logd("MainActivity", "mmkv = $mmkv")
-        logd("MainActivity", "mmkv_dir = $mmkv_dir")
+        logd("MainActivity,onCreate", "inflater = $inflater")
+        logd("MainActivity,onCreate", "retrofit = $retrofit")
+        logd("MainActivity,onCreate", "netApi = $netApi")
+        logd("MainActivity,onCreate", "mmkv = $mmkv")
+        logd("MainActivity,onCreate", "mmkv_dir = $mmkv_dir")
+        logd("MainActivity,onCreate", "haha = ${mmkv.decodeString("haha", "")}")
+        mmkv.encode("haha", "my first try mmkv")
+        logd("MainActivity,onCreate", "haha = ${mmkv.decodeString("haha", "")}")
     }
 
 //    private val EMAIL = "email"

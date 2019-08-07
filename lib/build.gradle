@@ -97,4 +97,8 @@ dependencies {
     api "androidx.lifecycle:lifecycle-extensions:2.0.0"
     //  mmkv
     api 'com.tencent:mmkv:1.0.22'
+
+    // navigation Kotlin
+    api "androidx.navigation:navigation-fragment-ktx:2.1.0-beta02"
+    api "androidx.navigation:navigation-ui-ktx:2.1.0-beta02"
 }

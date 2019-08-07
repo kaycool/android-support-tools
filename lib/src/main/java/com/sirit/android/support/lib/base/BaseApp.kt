@@ -29,7 +29,7 @@ open class BaseApp : Application(), KodeinAware {
     override fun onCreate() {
         super.onCreate()
         instance = this
-        MMKV.initialize(rootDir)
+        MMKV.initialize(this)
         val k = kodein
         println("BaseApp$k,rootDir=$rootDir")
     }
